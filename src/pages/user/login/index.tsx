@@ -112,7 +112,7 @@ const Login: React.FC = () => {
       // Parse the backend response which is wrapped in ResponseResult<LoginResponse>
       const responseResult =
         result as unknown as API.ResponseResult<API.LoginResponseData>;
-      if (responseResult?.code === 0 && responseResult?.data?.token) {
+      if (responseResult?.code === 200 && responseResult?.data?.token) {
         // Store JWT token
         localStorage.setItem('token', responseResult.data.token);
         const defaultLoginSuccessMessage = intl.formatMessage({
@@ -190,7 +190,7 @@ const Login: React.FC = () => {
             ]}
           />
 
-          {code !== undefined && code !== 0 && type === 'account' && (
+          {code !== undefined && code !== 200 && type === 'account' && (
             <LoginMessage
               content={intl.formatMessage({
                 id: 'pages.login.accountLogin.errorMessage',

@@ -97,6 +97,24 @@ export default [
     ],
   },
   {
+    path: '/lottery-analyze',
+    name: 'lotteryAnalyze',
+    icon: 'barChart',
+    access: 'canAdmin',
+    routes: [
+      {
+        path: '/lottery-analyze',
+        redirect: '/lottery-analyze/lottery-analysis',
+      },
+      {
+        name: 'lottery-analysis',
+        icon: 'barChart',
+        path: '/lottery-analyze/lottery-analysis',
+        component: './lottery-analyze',
+      },
+    ],
+  },
+  {
     path: '/form',
     icon: 'form',
     name: 'form',

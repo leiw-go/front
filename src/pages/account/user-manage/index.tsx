@@ -212,7 +212,7 @@ const UserManage: React.FC = () => {
           >;
           return {
             data: result?.data || [],
-            success: result?.code === 0,
+            success: result?.code === 200,
             total: result?.data?.length || 0,
           };
         }}

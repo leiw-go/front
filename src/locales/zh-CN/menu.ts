@@ -51,4 +51,6 @@
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
   'menu.chatbot': 'AI 助手',
+  'menu.lotteryAnalyze': '乐透分析',
+  'menu.lotteryAnalyze.lottery-analysis': '乐透分析',
 };

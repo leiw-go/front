@@ -3,21 +3,21 @@ import type { RequestConfig } from '@umijs/max';
 import { getIntl } from '@umijs/max';
 import { message, notification } from 'antd';
 
-// 错误处理方案： 错误类型
+// 后端响应格式（后端使用 code 而非 success 字段）
+interface BackendResponse {
+  code: number;
+  message: string;
+  data: unknown;
+  errors?: string[];
+}
+
+// 错误显示类型
 enum ErrorShowType {
   SILENT = 0,
   WARN_MESSAGE = 1,
   ERROR_MESSAGE = 2,
   NOTIFICATION = 3,
   REDIRECT = 9,
-}
-// 与后端约定的响应数据格式
-interface ResponseStructure {
-  success: boolean;
-  data: unknown;
-  errorCode?: number;
-  errorMessage?: string;
-  showType?: ErrorShowType;
 }
 
 /**
@@ -30,13 +30,23 @@ export const errorConfig: RequestConfig = {
   errorConfig: {
     // 错误抛出
     errorThrower: (res) => {
-      const { success, data, errorCode, errorMessage, showType } =
-        res as unknown as ResponseStructure;
-      if (!success) {
-        const error: any = new Error(errorMessage);
+      const {
+        code,
+        message: errorMessage,
+        data,
+        errors,
+      } = res as unknown as BackendResponse;
+      if (code !== undefined && code !== 200) {
+        const error: any = new Error(errorMessage || 'Request failed');
         error.name = 'BizError';
-        error.info = { errorCode, errorMessage, showType, data };
-        throw error; // 抛出自制的错误
+        error.info = {
+          errorCode: code,
+          errorMessage: errorMessage,
+          showType: ErrorShowType.ERROR_MESSAGE,
+          data,
+          errors,
+        };
+        throw error;
       }
     },
     // 错误接收及处理
@@ -44,12 +54,12 @@ export const errorConfig: RequestConfig = {
       if (opts?.skipErrorHandler) throw error;
       // 我们的 errorThrower 抛出的错误。
       if (error.name === 'BizError') {
-        const errorInfo: ResponseStructure | undefined = error.info;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const errorInfo: any = error.info;
         if (errorInfo) {
-          const { errorMessage, errorCode } = errorInfo;
-          switch (errorInfo.showType) {
+          const { errorMessage, errorCode, showType } = errorInfo;
+          switch (showType ?? ErrorShowType.ERROR_MESSAGE) {
             case ErrorShowType.SILENT:
-              // do nothing
               break;
             case ErrorShowType.WARN_MESSAGE:
               message.warning(errorMessage);
@@ -59,7 +69,7 @@ export const errorConfig: RequestConfig = {
               break;
             case ErrorShowType.NOTIFICATION:
               notification.open({
-                title: errorCode,
+                title: String(errorCode),
                 description: errorMessage,
               });
               break;

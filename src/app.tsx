@@ -23,6 +23,11 @@ import { currentUser as queryCurrentUser } from '@/services/ant-design-pro/api';
 import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
 
+/** Request runtime config - applies error handling, auth interceptors */
+export const request: RequestConfig = {
+  ...errorConfig,
+};
+
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 

@@ -51,4 +51,6 @@
   'menu.editor.mind': 'Mind Editor',
   'menu.editor.koni': 'Koni Editor',
   'menu.chatbot': 'AI Assistant',
+  'menu.lotteryAnalyze': 'Lottery Analyze',
+  'menu.lotteryAnalyze.lottery-analysis': 'Lottery Analysis',
 };
