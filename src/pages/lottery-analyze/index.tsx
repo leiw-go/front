@@ -5,23 +5,25 @@ import { request } from '@umijs/max';
 import { Button, Card, Col, DatePicker, Row, Space, Tabs, Tag } from 'antd';
 import dayjs from 'dayjs';
 import type { FC } from 'react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 /* ──────────────────────────────────────────────
    Types
    ────────────────────────────────────────────── */
 
-type CountPair = {
-  periodA: number;
-  periodB: number;
+type MultiPeriodNumberStatistic = {
+  number: string;
+  counts: Record<string, number>;
+  totalCount: number;
 };
 
-type ApiResponseData = {
-  front: CountPair[];
-  back: CountPair[];
+type MultiplePeriodStatisticsResponse = {
+  periods: { label: string; totalPeriods: number }[];
+  frontAreaStats: MultiPeriodNumberStatistic[];
+  backAreaStats: MultiPeriodNumberStatistic[];
 };
 
-type ChartItem = {
+type StatsEntry = {
   number: string;
   count: number;
   period: string;
@@ -92,11 +94,13 @@ const sharedColumnProps = {
    ────────────────────────────────────────────── */
 
 const sharedLineProps = {
-  lineWidth: 3,
   smooth: false,
   point: {
     size: 2.5,
     shape: 'circle',
+  },
+  style: {
+    lineWidth: 3,
   },
   axis: {
     x: {
@@ -176,108 +180,129 @@ const RankingSidebar: FC<{
 const LotteryAnalyze: FC = () => {
   const [activeTab, setActiveTab] = useState<string>('front');
   const [lineTab, setLineTab] = useState<string>('front');
-  const [dateA, setDateA] = useState<dayjs.Dayjs>(dayjs().subtract(60, 'day'));
-  const [dateB, setDateB] = useState<dayjs.Dayjs>(dayjs());
+  const [dateAStart, setDateAStart] = useState<dayjs.Dayjs>(dayjs().subtract(60, 'day'));
+  const [dateAEnd, setDateAEnd] = useState<dayjs.Dayjs>(dayjs().subtract(30, 'day'));
+  const [dateBStart, setDateBStart] = useState<dayjs.Dayjs>(dayjs().subtract(30, 'day'));
+  const [dateBEnd, setDateBEnd] = useState<dayjs.Dayjs>(dayjs());
 
+  /* auto-fetch on first visit */
+  const didInit = useRef(false);
+  useEffect(() => {
+    if (!didInit.current) {
+      didInit.current = true;
+      refetch();
+    }
+  }, []);
   const {
     isLoading: loading,
     data: rawData,
     refetch,
   } = useQuery({
-    queryKey: ['lottery-analysis'],
+    queryKey: ['lottery-analysis', dateAStart.format('YYYY-MM-DD'), dateAEnd.format('YYYY-MM-DD'), dateBStart.format('YYYY-MM-DD'), dateBEnd.format('YYYY-MM-DD')],
+    enabled: false,
     queryFn: () =>
-      request<{ data: ApiResponseData }>('/api/lottery_analysis').then(
-        (res: any) => res.data,
-      ),
+      request('/api/lottery/statistics/multiple', {
+        method: 'POST',
+        data: {
+          ranges: [
+            { label: PERIOD_A_LABEL, startDate: dateAStart.format('YYYY-MM-DD'), endDate: dateAEnd.format('YYYY-MM-DD') },
+            { label: PERIOD_B_LABEL, startDate: dateBStart.format('YYYY-MM-DD'), endDate: dateBEnd.format('YYYY-MM-DD') },
+          ],
+        },
+      })
+      .then((res: any) => res.data),
   });
 
-  const labels = activeTab === 'front' ? frontLabels : backLabels;
-  const source = activeTab === 'front' ? rawData?.front : rawData?.back;
 
   /* ── Histogram data (two periods, grouped) ── */
-  const chartData: ChartItem[] = useMemo(() => {
-    if (!source) return [];
-    return source.flatMap((item: CountPair, idx: number) => [
-      { number: labels[idx], count: item.periodA, period: PERIOD_A_LABEL },
-      { number: labels[idx], count: item.periodB, period: PERIOD_B_LABEL },
+  const chartData: StatsEntry[] = useMemo(() => {
+    if (!rawData) return [];
+    const chStats = activeTab === 'front' ? rawData?.frontAreaStats : rawData?.backAreaStats;
+    if (!chStats) return [];
+    return [...chStats]
+      .sort((a, b) => parseInt(a.number.replace(/^B/, ''), 10) - parseInt(b.number.replace(/^B/, ''), 10))
+      .flatMap((item: MultiPeriodNumberStatistic) => [
+      { number: item.number, count: item.counts[PERIOD_A_LABEL] || 0, period: PERIOD_A_LABEL },
+      { number: item.number, count: item.counts[PERIOD_B_LABEL] || 0, period: PERIOD_B_LABEL },
     ]);
-  }, [source, labels]);
+  }, [rawData, activeTab]);
 
   /* ── Line-chart data (period A only) ── */
-  const lineData: ChartItem[] = useMemo(() => {
-    if (!source) return [];
-    return source.map((item: CountPair, idx: number) => ({
-      number: labels[idx],
-      count: item.periodA,
+  const lineData: StatsEntry[] = useMemo(() => {
+    if (!rawData) return [];
+    const ldStats = activeTab === 'front' ? rawData?.frontAreaStats : rawData?.backAreaStats;
+    if (!ldStats) return [];
+    return ldStats.map((item: MultiPeriodNumberStatistic) => ({
+      number: item.number,
+      count: item.counts[PERIOD_A_LABEL] || 0,
       period: PERIOD_A_LABEL,
     }));
-  }, [source, labels]);
+  }, [rawData, activeTab]);
 
   /* ── Ranking data (period A only, sorted desc) ── */
   const rankData: RankItem[] = useMemo(() => {
-    if (!source) return [];
-    return source
-      .map((item: CountPair, idx: number) => ({
-        number: labels[idx],
-        count: item.periodA,
+    if (!rawData) return [];
+    const stats = activeTab === 'front' ? rawData.frontAreaStats : rawData.backAreaStats;
+    if (!stats) return [];
+    return stats.map((item: MultiPeriodNumberStatistic) => ({
+        number: item.number,
+        count: item.counts[PERIOD_A_LABEL] || 0,
       }))
       .sort((a: RankItem, b: RankItem) => b.count - a.count);
-  }, [source, labels]);
+  }, [rawData, activeTab]);
 
   /* ── Y-axis min ── */
   const yMin = useMemo(() => {
     if (chartData.length === 0) return 0;
-    const values = chartData.map((d) => d.count);
+    const values = chartData.map((d: StatsEntry) => d.count);
     return Math.max(0, Math.min(...values) - 2);
   }, [chartData]);
 
   /* ── Ranking title ── */
   const rankingTitle =
     activeTab === 'front'
-      ? '目标时间段前区号码出现次数排名'
-      : '目标时间段后区号码出现次数排名';
+      ? '前区号码出现次数排名'
+      : '后区号码出现次数排名';
 
   /* ── Line chart labels (sync with histogram tab) ── */
-  const lineLabels = lineTab === 'front' ? frontLabels : backLabels;
-  const lineSource = lineTab === 'front' ? rawData?.front : rawData?.back;
 
-  const lineChartData: ChartItem[] = useMemo(() => {
-    if (!lineSource) return [];
-    return lineSource.map((item: CountPair, idx: number) => ({
-      number: lineLabels[idx],
-      count: item.periodA,
+  const lineChartData: StatsEntry[] = useMemo(() => {
+    if (!rawData) return [];
+    const lcStats = lineTab === 'front' ? rawData?.frontAreaStats : rawData?.backAreaStats;
+    if (!lcStats) return [];
+    return [...lcStats]
+      .sort((a, b) => parseInt(a.number.replace(/^B/, ''), 10) - parseInt(b.number.replace(/^B/, ''), 10))
+      .map((item: MultiPeriodNumberStatistic) => ({
+      number: item.number,
+      count: item.counts[PERIOD_A_LABEL] || 0,
       period: PERIOD_A_LABEL,
     }));
-  }, [lineSource, lineLabels]);
+  }, [rawData, lineTab]);
 
   const lineYMin = useMemo(() => {
     if (lineChartData.length === 0) return 0;
-    const values = lineChartData.map((d) => d.count);
+    const values = lineChartData.map((d: StatsEntry) => d.count);
     return Math.max(0, Math.min(...values) - 2);
   }, [lineChartData]);
 
-  /* ── Line card title ── */
-  const lineCardTitle =
-    lineTab === 'front'
-      ? '前区号码出现次数折线图（时间段A）'
-      : '后区号码出现次数折线图（时间段A）';
+  /* period summary */
+  const periodSummary = useMemo(() => {
+    if (!rawData?.periods || rawData.periods.length === 0) return { aText: '', bText: '' };
+    const periodA = rawData.periods.find((p: { label: string; totalPeriods: number }) => p.label === PERIOD_A_LABEL);
+    const periodB = rawData.periods.find((p: { label: string; totalPeriods: number }) => p.label === PERIOD_B_LABEL);
+    const aCount = periodA ? periodA.totalPeriods : 0;
+    const bCount = periodB ? periodB.totalPeriods : 0;
+    return {
+      aText: aCount > 0 ? aCount + '期' : '',
+      bText: bCount > 0 ? bCount + '期' : '',
+    };
+  }, [rawData]);
 
   const handleAnalyze = () => {
     refetch();
   };
 
-  /* ── Tooltip formatter (shared) ── */
-  const tooltipFormatter = (datum: any) => ({
-    name: datum.period,
-    value: `${datum.count}次`,
-  });
-
-  const lineTooltipFormatter = (_datum: any) => ({
-    name: '出现次数',
-    value: `${_datum.count}次`,
-  });
-
-  return (
+  /* ── Tooltip formatter (shared) ── */  return (
     <GridContent>
       <Space
         direction="vertical"
@@ -285,15 +310,29 @@ const LotteryAnalyze: FC = () => {
         style={{ width: '100%', marginBottom: 16 }}
       >
         {/* ═══ Date picker row ═══ */}
-        <Row justify="end" gutter={[16, 8]} wrap>
+
+
+        {/* ═══ Main histogram card ═══ */}
+        <Card variant="borderless">
+
+                      <Row justify="end" gutter={[16, 8]} wrap>
           <Col>
             <Space>
-              <Tag color="blue">{PERIOD_A_LABEL}</Tag>
+              {periodSummary.aText && <Tag color="blue">目标时间段期数：{periodSummary.aText}</Tag>}
+              {periodSummary.bText && <Tag color="red">对比时间段期数：{periodSummary.bText}</Tag>}
+                            <Tag color="blue">{PERIOD_A_LABEL}</Tag>
               <DatePicker
-                value={dateA}
-                onChange={(d) => d && setDateA(d)}
+                value={dateAStart}
+                onChange={(d) => d && setDateAStart(d)}
                 variant="filled"
-                style={{ width: 170 }}
+                style={{ width: 150 }}
+              />
+              <span style={{ margin: '0 4px', color: '#999' }}>~</span>
+              <DatePicker
+                value={dateAEnd}
+                onChange={(d) => d && setDateAEnd(d)}
+                variant="filled"
+                style={{ width: 150 }}
               />
             </Space>
           </Col>
@@ -301,10 +340,17 @@ const LotteryAnalyze: FC = () => {
             <Space>
               <Tag color="red">{PERIOD_B_LABEL}</Tag>
               <DatePicker
-                value={dateB}
-                onChange={(d) => d && setDateB(d)}
+                value={dateBStart}
+                onChange={(d) => d && setDateBStart(d)}
                 variant="filled"
-                style={{ width: 170 }}
+                style={{ width: 150 }}
+              />
+              <span style={{ margin: '0 4px', color: '#999' }}>~</span>
+              <DatePicker
+                value={dateBEnd}
+                onChange={(d) => d && setDateBEnd(d)}
+                variant="filled"
+                style={{ width: 150 }}
               />
               <Button type="primary" onClick={handleAnalyze} loading={loading}>
                 一键分析
@@ -312,21 +358,19 @@ const LotteryAnalyze: FC = () => {
             </Space>
           </Col>
         </Row>
-
-        {/* ═══ Main histogram card ═══ */}
-        <Card variant="borderless">
-          <Tabs
+<Tabs
             activeKey={activeTab}
             onChange={setActiveTab}
+            destroyInactiveTabPane
             items={[
               {
                 key: 'front',
-                label: '前区号码出现次数（1-35）',
+                label: '前区号码出现次数（01-35）',
                 children: (
                   <Row gutter={16}>
                     <Col xs={24} lg={16}>
                       <div style={{ padding: '0 0 24px 0' }}>
-                        <Column
+                        <Column key={activeTab}
                           height={350}
                           data={chartData}
                           xField="number"
@@ -335,10 +379,10 @@ const LotteryAnalyze: FC = () => {
                           color={COLORS}
                           {...sharedColumnProps}
                           tooltip={{
-                            showCrosshairs: true,
-                            crosshairs: { type: 'x' },
-                            shared: true,
-                            formatter: tooltipFormatter,
+                            title: (d: any) => d.number + '号',
+                            items: [
+                              { channel: 'y', valueFormatter: (d: any) => d + '次' },
+                            ],
                           }}
                           scale={{
                             ...sharedColumnProps.scale,
@@ -355,12 +399,12 @@ const LotteryAnalyze: FC = () => {
               },
               {
                 key: 'back',
-                label: '后区号码出现次数（B01-B12）',
+                label: '后区号码出现次数（01-12）',
                 children: (
                   <Row gutter={16}>
                     <Col xs={24} lg={16}>
                       <div style={{ padding: '0 0 24px 0' }}>
-                        <Column
+                        <Column key={activeTab}
                           height={350}
                           data={chartData}
                           xField="number"
@@ -369,10 +413,10 @@ const LotteryAnalyze: FC = () => {
                           color={COLORS}
                           {...sharedColumnProps}
                           tooltip={{
-                            showCrosshairs: true,
-                            crosshairs: { type: 'x' },
-                            shared: true,
-                            formatter: tooltipFormatter,
+                            title: (d: any) => d.number + '号',
+                            items: [
+                              { channel: 'y', valueFormatter: (d: any) => d + '次' },
+                            ],
                           }}
                           scale={{
                             ...sharedColumnProps.scale,
@@ -394,18 +438,12 @@ const LotteryAnalyze: FC = () => {
         {/* ═══ Line-chart card ═══ */}
         <Card
           variant="borderless"
-          title={
-            <Space>
-              <span>时间段A的次数统计</span>
-              <Tag color="blue" style={{ marginLeft: 8 }}>
-                {PERIOD_A_LABEL}
-              </Tag>
-            </Space>
-          }
+
         >
           <Tabs
             activeKey={lineTab}
             onChange={setLineTab}
+            destroyInactiveTabPane
             items={[
               {
                 key: 'front',
@@ -420,9 +458,10 @@ const LotteryAnalyze: FC = () => {
                       color={['#1890ff']}
                       {...sharedLineProps}
                       tooltip={{
-                        showCrosshairs: true,
-                        crosshairs: { type: 'x' },
-                        formatter: lineTooltipFormatter,
+                        title: (d: any) => d.number + '号',
+                        items: [
+                          { channel: 'y', valueFormatter: (d: any) => d + '次' },
+                        ],
                       }}
                       scale={{
                         y: { min: lineYMin, nice: true },
@@ -444,9 +483,10 @@ const LotteryAnalyze: FC = () => {
                       color={['#1890ff']}
                       {...sharedLineProps}
                       tooltip={{
-                        showCrosshairs: true,
-                        crosshairs: { type: 'x' },
-                        formatter: lineTooltipFormatter,
+                        title: (d: any) => d.number + '号',
+                        items: [
+                          { channel: 'y', valueFormatter: (d: any) => d + '次' },
+                        ],
                       }}
                       scale={{
                         y: { min: lineYMin, nice: true },

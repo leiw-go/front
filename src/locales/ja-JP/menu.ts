@@ -50,4 +50,4 @@
   'menu.editor.flow': 'フローエディタ',
   'menu.editor.mind': 'マインドエディタ',
   'menu.editor.koni': 'コニエディタ',
-};
+}\n  'menu.chatbot': 'AI アシスタント',\n  'menu.lotteryAnalyze': '宝くじ分析',\n  'menu.lotteryAnalyze.lottery-analysis': '宝くじ分析',\n};\n

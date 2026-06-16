@@ -50,4 +50,4 @@
   'menu.editor.flow': 'ویرایشگر جریان',
   'menu.editor.mind': 'ویرایشگر ذهن',
   'menu.editor.koni': 'ویرایشگر کونی',
-};
+}\n  'menu.chatbot': 'دستیار هوشمند',\n  'menu.lotteryAnalyze': 'تحلیل لاتاری',\n  'menu.lotteryAnalyze.lottery-analysis': 'تحلیل لاتاری',\n};\n

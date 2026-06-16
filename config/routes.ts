@@ -100,7 +100,6 @@ export default [
     path: '/lottery-analyze',
     name: 'lotteryAnalyze',
     icon: 'barChart',
-    access: 'canAdmin',
     routes: [
       {
         path: '/lottery-analyze',

@@ -50,4 +50,4 @@
   'menu.editor.flow': '流程編輯器',
   'menu.editor.mind': '腦圖編輯器',
   'menu.editor.koni': '拓撲編輯器',
-};
+}\n  'menu.chatbot': 'AI 助手',\n  'menu.lotteryAnalyze': '樂透分析',\n  'menu.lotteryAnalyze.lottery-analysis': '樂透分析',\n};\n
