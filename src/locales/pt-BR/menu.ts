@@ -52,4 +52,7 @@
   'menu.editor.flow': 'Editor de Fluxo',
   'menu.editor.mind': 'Editor de Mente',
   'menu.editor.koni': 'Editor Koni',
-}\n  'menu.chatbot': 'Assistente IA',\n  'menu.lotteryAnalyze': 'Análise de Loteria',\n  'menu.lotteryAnalyze.lottery-analysis': 'Análise de Loteria',\n};\n
+  'menu.chatbot': 'Assistente IA',
+  'menu.lotteryAnalyze': 'Análise de Loteria',
+  'menu.lotteryAnalyze.lottery-analysis': 'Análise de Loteria',
+};

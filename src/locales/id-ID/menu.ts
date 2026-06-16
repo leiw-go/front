@@ -50,4 +50,7 @@
   'menu.editor.flow': 'Editor Alur',
   'menu.editor.mind': 'Editor Pikiran',
   'menu.editor.koni': 'Editor Koni',
-}\n  'menu.chatbot': 'Asisten AI',\n  'menu.lotteryAnalyze': 'Analisis Lotre',\n  'menu.lotteryAnalyze.lottery-analysis': 'Analisis Lotre',\n};\n
+  'menu.chatbot': 'Asisten AI',
+  'menu.lotteryAnalyze': 'Analisis Lotre',
+  'menu.lotteryAnalyze.lottery-analysis': 'Analisis Lotre',
+};

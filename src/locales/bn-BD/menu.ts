@@ -50,4 +50,7 @@
   'menu.editor.flow': 'ফ্লো এডিটর',
   'menu.editor.mind': 'মাইন্ড এডিটর',
   'menu.editor.koni': 'কোনি এডিটর',
-}\n  'menu.chatbot': 'AI সহায়ক',\n  'menu.lotteryAnalyze': 'লটারি বিশ্লেষণ',\n  'menu.lotteryAnalyze.lottery-analysis': 'লটারি বিশ্লেষণ',\n};\n
+  'menu.chatbot': 'AI সহায়ক',
+  'menu.lotteryAnalyze': 'লটারি বিশ্লেষণ',
+  'menu.lotteryAnalyze.lottery-analysis': 'লটারি বিশ্লেষণ',
+};
