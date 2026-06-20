@@ -8,5 +8,4 @@ dist
 *.log
 Dockerfile
 .dockerignore
-nginx-spa.conf
 README*.md
