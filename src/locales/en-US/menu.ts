@@ -59,4 +59,7 @@ export default {
   'menu.lottery.analysis': 'Data Analysis',
   'menu.lotteryAnalyze': 'Lottery Analyze',
   'menu.lotteryAnalyze.lottery-analysis': 'SupperLottery',
+  'menu.quant': 'Quant Strategy',
+  'menu.quant.strategy-manage': 'Strategy Management',
+  'menu.quant.account-manage': 'JoinQuant Accounts',
 };

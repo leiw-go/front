@@ -145,6 +145,30 @@ export default [
       },
     ],
   },
+  // 量化策略管理模块
+  {
+    name: 'quant',
+    icon: 'fund',
+    path: '/quant',
+    routes: [
+      {
+        path: '/quant',
+        redirect: '/quant/strategy-manage',
+      },
+      {
+        name: 'strategy-manage',
+        icon: 'rise',
+        path: '/quant/strategy-manage',
+        component: './quant/strategy-manage',
+      },
+      {
+        name: 'account-manage',
+        icon: 'user',
+        path: '/quant/account-manage',
+        component: './quant/account-manage',
+      },
+    ],
+  },
   {
     path: '/form',
     icon: 'form',

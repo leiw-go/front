@@ -59,4 +59,7 @@ export default {
   'menu.lottery.analysis': '数据分析',
   'menu.lotteryAnalyze': '大乐透分析',
   'menu.lotteryAnalyze.lottery-analysis': '乐透分析',
+  'menu.quant': '量化策略',
+  'menu.quant.strategy-manage': '策略管理',
+  'menu.quant.account-manage': '聚宽账户',
 };
