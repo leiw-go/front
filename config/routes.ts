@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @name umi 的路由配置
  * @description 只支持 path,component,routes,redirect,wrappers,name,icon 的配置
  * @param path  path 只支持两种占位符配置，第一种是动态参数 :id 的形式，第二种是 * 通配符，通配符只能出现路由字符串的最后。
@@ -96,19 +96,51 @@ export default [
       },
     ],
   },
+  // 系统管理模块
   {
-    path: '/lottery-analyze',
-    name: 'lotteryAnalyze',
-    icon: 'barChart',
+    name: 'system',
+    icon: 'setting',
+    path: '/system',
+    access: 'canAdmin',
     routes: [
       {
-        path: '/lottery-analyze',
-        redirect: '/lottery-analyze/lottery-analysis',
+        path: '/system',
+        redirect: '/system/role-manage',
+      },
+      {
+        name: 'role-manage',
+        icon: 'safetyCertificate',
+        path: '/system/role-manage',
+        component: './system/role-manage',
+      },
+      {
+        name: 'product-manage',
+        icon: 'shopping',
+        path: '/system/product-manage',
+        component: './system/product-manage',
+      },
+    ],
+  },
+  // 大乐透管理模块
+  {
+    name: 'lottery',
+    icon: 'database',
+    path: '/lottery',
+    routes: [
+      {
+        path: '/lottery',
+        redirect: '/lottery/period-manage',
+      },
+      {
+        name: 'period-manage',
+        icon: 'table',
+        path: '/lottery/period-manage',
+        component: './lottery/period-manage',
       },
       {
         name: 'lottery-analysis',
         icon: 'barChart',
-        path: '/lottery-analyze/lottery-analysis',
+        path: '/lottery/analysis',
         component: './lottery-analyze',
       },
     ],

@@ -1,4 +1,4 @@
-﻿export default {
+export default {
   'menu.welcome': 'Welcome',
   'menu.more-blocks': 'More Blocks',
   'menu.home': 'Home',
@@ -51,6 +51,12 @@
   'menu.editor.mind': 'Mind Editor',
   'menu.editor.koni': 'Koni Editor',
   'menu.chatbot': 'AI Assistant',
+  'menu.system': 'System Management',
+  'menu.system.role-manage': 'Role Management',
+  'menu.system.product-manage': 'Product Management',
+  'menu.lottery': 'Lottery Management',
+  'menu.lottery.period-manage': 'Draw Records',
+  'menu.lottery.analysis': 'Data Analysis',
   'menu.lotteryAnalyze': 'Lottery Analyze',
   'menu.lotteryAnalyze.lottery-analysis': 'SupperLottery',
 };

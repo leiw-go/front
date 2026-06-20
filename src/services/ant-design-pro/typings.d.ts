@@ -1,4 +1,4 @@
-﻿// @ts-ignore
+// @ts-ignore
 /* eslint-disable */
 
 declare namespace API {
@@ -149,5 +149,83 @@ declare namespace API {
     permissionIds?: string[];
     createTime?: string;
     updateTime?: string;
+  };
+
+  // Product management types
+  type ProductItem = {
+    id?: string;
+    productName: string;
+    productCode: string;
+    category?: string;
+    description?: string;
+    price?: number;
+    status?: number;
+    createTime?: string;
+    updateTime?: string;
+  };
+
+  // Lottery Period types
+  type LotteryPeriod = {
+    id?: string;
+    period: string;
+    drawDate: string;
+    front1: number;
+    front2: number;
+    front3: number;
+    front4: number;
+    front5: number;
+    back1: number;
+    back2: number;
+    createTime?: string;
+    updateTime?: string;
+  };
+
+  // Permission types
+  type Permission = {
+    id?: string;
+    permissionName: string;
+    permissionCode: string;
+    description?: string;
+    createTime?: string;
+  };
+
+  // Single period statistics types
+  type NumberStatistic = {
+    number: string;
+    count: number;
+  };
+
+  type SinglePeriodStatisticsResponse = {
+    totalPeriods: number;
+    frontAreaStats: NumberStatistic[];
+    backAreaStats: NumberStatistic[];
+  };
+
+  // Multiple period statistics types
+  type PeriodRange = {
+    label: string;
+    startDate: string;
+    endDate: string;
+  };
+
+  type MultiplePeriodStatisticsRequest = {
+    ranges: PeriodRange[];
+  };
+
+  type MultiPeriodNumberStatistic = {
+    number: string;
+    counts: Record<string, number>;
+    totalCount: number;
+  };
+
+  type PeriodSummary = {
+    label: string;
+    totalPeriods: number;
+  };
+
+  type MultiplePeriodStatisticsResponse = {
+    periods: PeriodSummary[];
+    frontAreaStats: MultiPeriodNumberStatistic[];
+    backAreaStats: MultiPeriodNumberStatistic[];
   };
 }

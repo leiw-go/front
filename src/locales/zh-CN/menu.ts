@@ -1,4 +1,4 @@
-﻿export default {
+export default {
   'menu.welcome': '欢迎',
   'menu.more-blocks': '更多区块',
   'menu.home': '首页',
@@ -51,6 +51,12 @@
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
   'menu.chatbot': 'AI 助手',
-  'menu.lotteryAnalyze': 'LotteryAnalyze',
+  'menu.system': '系统管理',
+  'menu.system.role-manage': '角色管理',
+  'menu.system.product-manage': '产品管理',
+  'menu.lottery': '大乐透管理',
+  'menu.lottery.period-manage': '开奖记录',
+  'menu.lottery.analysis': '数据分析',
+  'menu.lotteryAnalyze': '大乐透分析',
   'menu.lotteryAnalyze.lottery-analysis': '乐透分析',
 };

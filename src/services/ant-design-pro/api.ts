@@ -184,3 +184,142 @@ export async function deleteRole(id: string, options?: { [key: string]: any }) {
     ...(options || {}),
   });
 }
+
+// ========== Product Management APIs ==========
+
+/** 获取所有产品 GET /api/products */
+export async function getProducts(options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.ProductItem[]>>('/api/products', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 创建产品 POST /api/products */
+export async function createProduct(body: API.ProductItem, options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.ProductItem>>('/api/products', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 更新产品 PUT /api/products/{id} */
+export async function updateProduct(id: string, body: API.ProductItem, options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.ProductItem>>('/api/products/' + id, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 删除产品 DELETE /api/products/{id} */
+export async function deleteProduct(id: string, options?: { [key: string]: any }) {
+  return request<API.ResponseResult<null>>('/api/products/' + id, {
+    method: 'DELETE',
+    ...(options || {}),
+  });
+}
+
+/** 根据ID获取产品 GET /api/products/{id} */
+export async function getProductById(id: string, options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.ProductItem>>('/api/products/' + id, {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+// ========== Permission APIs ==========
+
+/** 获取所有权限 GET /api/roles/permissions */
+export async function getPermissions(options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.Permission[]>>('/api/roles/permissions', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+// ========== Lottery Period APIs ==========
+
+/** 获取所有开奖记录 GET /api/lottery/periods */
+export async function getLotteryPeriods(options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.LotteryPeriod[]>>('/api/lottery/periods', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 创建开奖记录 POST /api/lottery/periods */
+export async function createLotteryPeriod(body: API.LotteryPeriod, options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.LotteryPeriod>>('/api/lottery/periods', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 更新开奖记录 PUT /api/lottery/periods/{id} */
+export async function updateLotteryPeriod(id: string, body: API.LotteryPeriod, options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.LotteryPeriod>>('/api/lottery/periods/' + id, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 删除开奖记录 DELETE /api/lottery/periods/{id} */
+export async function deleteLotteryPeriod(id: string, options?: { [key: string]: any }) {
+  return request<API.ResponseResult<null>>('/api/lottery/periods/' + id, {
+    method: 'DELETE',
+    ...(options || {}),
+  });
+}
+
+/** 根据ID获取开奖记录 GET /api/lottery/periods/{id} */
+export async function getLotteryPeriodById(id: string, options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.LotteryPeriod>>('/api/lottery/periods/' + id, {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+// ========== Lottery Statistics APIs ==========
+
+/** 单时间段号码统计 GET /api/lottery/statistics/single */
+export async function getSinglePeriodStatistics(
+  params: { startDate: string; endDate: string },
+  options?: { [key: string]: any }
+) {
+  return request<API.ResponseResult<API.SinglePeriodStatisticsResponse>>('/api/lottery/statistics/single', {
+    method: 'GET',
+    params,
+    ...(options || {}),
+  });
+}
+
+/** 多时间段号码统计对比 POST /api/lottery/statistics/multiple */
+export async function getMultiplePeriodStatistics(
+  body: API.MultiplePeriodStatisticsRequest,
+  options?: { [key: string]: any }
+) {
+  return request<API.ResponseResult<API.MultiplePeriodStatisticsResponse>>('/api/lottery/statistics/multiple', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
