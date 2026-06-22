@@ -228,4 +228,20 @@ declare namespace API {
     frontAreaStats: MultiPeriodNumberStatistic[];
     backAreaStats: MultiPeriodNumberStatistic[];
   };
+
+  // Register types
+  type RegisterParams = {
+    username: string;
+    password: string;
+    realName?: string;
+    email?: string;
+    phone?: string;
+  };
+
+  type RegisterResponse = {
+    id: string;
+    username: string;
+    realName?: string;
+    message?: string;
+  };
 }

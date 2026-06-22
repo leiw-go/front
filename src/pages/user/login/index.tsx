@@ -1,13 +1,14 @@
-﻿import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import {
   FormattedMessage,
   Helmet,
+  Link,
   SelectLang,
   useIntl,
   useModel,
 } from '@umijs/max';
-import { Alert, App, Tabs } from 'antd';
+import { Alert, App, Button, Space, Tabs } from 'antd';
 import { createStyles } from 'antd-style';
 import React, { startTransition, useState } from 'react';
 import { Footer } from '@/components';
@@ -35,6 +36,10 @@ const useStyles = createStyles(({ token }) => {
       backgroundImage:
         "url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')",
       backgroundSize: '100% 100%',
+    },
+    footer: {
+      textAlign: 'center',
+      marginTop: 16,
     },
   };
 });
@@ -66,7 +71,7 @@ const LoginMessage: React.FC<{
 
 const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
-  const [type, setType] = useState<string>('account');
+  const [type] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
   const { styles } = useStyles();
   const { message } = App.useApp();
@@ -74,19 +79,13 @@ const Login: React.FC = () => {
 
   /**
    * Validate redirect URL to prevent open redirect attacks
-   * Only allow same-origin relative paths starting with '/'
    */
   const getSafeRedirectUrl = (redirect: string | null): string => {
     if (!redirect?.startsWith('/')) return '/';
-
-    // Block protocol-relative URLs (//example.com)
     if (redirect.startsWith('//')) return '/';
-
     try {
       const parsed = new URL(redirect, window.location.origin);
-      // Only allow same-origin URLs
       if (parsed.origin !== window.location.origin) return '/';
-      // Return the path with query and hash preserved
       return parsed.pathname + parsed.search + parsed.hash;
     } catch {
       return '/';
@@ -107,13 +106,10 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (values: API.LoginParams) => {
     try {
-      // 登录
       const result = await login({ ...values, type });
-      // Parse the backend response which is wrapped in ResponseResult<LoginResponse>
       const responseResult =
         result as unknown as API.ResponseResult<API.LoginResponseData>;
       if (responseResult?.code === 200 && responseResult?.data?.token) {
-        // Store JWT token
         localStorage.setItem('token', responseResult.data.token);
         const defaultLoginSuccessMessage = intl.formatMessage({
           id: 'pages.login.success',
@@ -127,7 +123,6 @@ const Login: React.FC = () => {
         return;
       }
       console.log(result);
-      // 如果失败去设置用户错误信息
       setUserLoginState({ code: -1, type: 'account' });
     } catch (error) {
       const defaultLoginFailureMessage = intl.formatMessage({
@@ -177,7 +172,6 @@ const Login: React.FC = () => {
         >
           <Tabs
             activeKey={type}
-            onChange={setType}
             centered
             items={[
               {
@@ -208,7 +202,7 @@ const Login: React.FC = () => {
                 }}
                 placeholder={intl.formatMessage({
                   id: 'pages.login.username.placeholder',
-                  defaultMessage: '用户名: admin or user',
+                  defaultMessage: '用户名',
                 })}
                 rules={[
                   {
@@ -230,7 +224,7 @@ const Login: React.FC = () => {
                 }}
                 placeholder={intl.formatMessage({
                   id: 'pages.login.password.placeholder',
-                  defaultMessage: '密码: ant.design',
+                  defaultMessage: '密码',
                 })}
                 rules={[
                   {
@@ -247,21 +241,13 @@ const Login: React.FC = () => {
             </>
           )}
 
-          <div
-            style={{
-              marginBottom: 24,
-            }}
-          >
-            <a
-              style={{
-                float: 'right',
-              }}
-            >
-              {intl.formatMessage({
-                id: 'pages.login.forgotPassword',
-                defaultMessage: '忘记密码',
-              })}
-            </a>
+          <div className={styles.footer}>
+            <Space direction="vertical">
+              <span style={{ color: '#595959' }}>还没有账号？</span>
+              <Link to="/user/register" prefetch>
+                <Button type="link">立即注册</Button>
+              </Link>
+            </Space>
           </div>
         </LoginForm>
       </div>

@@ -323,3 +323,17 @@ export async function getMultiplePeriodStatistics(
     ...(options || {}),
   });
 }
+
+// ========== Register API ==========
+
+/** 用户注册 POST /api/auth/register */
+export async function register(body: API.RegisterParams, options?: { [key: string]: any }) {
+  return request<API.ResponseResult<API.RegisterResponse>>('/api/auth/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
