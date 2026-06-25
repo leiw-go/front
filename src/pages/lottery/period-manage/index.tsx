@@ -145,7 +145,6 @@ const PeriodManage: React.FC = () => {
     {
       title: '操作',
       dataIndex: 'option',
-      valueType: 'option',
       width: 120,
       render: (_, record) => [
         <a
@@ -198,8 +197,11 @@ const PeriodManage: React.FC = () => {
             page: current,
             size: pageSize,
           });
+          // Ensure data is always an array to prevent sort() errors
+          const rawData = result?.data?.data;
+          const data = Array.isArray(rawData) ? rawData : [];
           return {
-            data: result?.data?.data || [],
+            data,
             success: result?.code === 200,
             total: result?.data?.total || 0,
           };
