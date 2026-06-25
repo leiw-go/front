@@ -249,13 +249,12 @@ const Register: React.FC = () => {
             ]}
           />
 
-          <div className={styles.footer}>
-            <Space direction="vertical">
-              <span style={{ color: '#595959' }}>已有账号？</span>
-              <Link to="/user/login" prefetch>
-                <Button type="link">立即登录</Button>
-              </Link>
-            </Space>
+          <div
+            className={styles.footer}
+            style={{ textAlign: 'center', marginTop: 16 }}
+          >
+            <span style={{ color: '#595959' }}>已有账号？</span>
+            <Link to="/user/login">立即登录</Link>
           </div>
         </LoginForm>
       </div>

@@ -8,7 +8,7 @@ import {
   useIntl,
   useModel,
 } from '@umijs/max';
-import { Alert, App, Button, Space, Tabs } from 'antd';
+import { Alert, App, Tabs } from 'antd';
 import { createStyles } from 'antd-style';
 import React, { startTransition, useState } from 'react';
 import { Footer } from '@/components';
@@ -242,12 +242,9 @@ const Login: React.FC = () => {
           )}
 
           <div className={styles.footer}>
-            <Space direction="vertical">
-              <span style={{ color: '#595959' }}>还没有账号？</span>
-              <Link to="/user/register" prefetch>
-                <Button type="link">立即注册</Button>
-              </Link>
-            </Space>
+            <span style={{ color: '#595959' }}>
+              还没有账号？<Link to="/user/register">立即注册</Link>
+            </span>
           </div>
         </LoginForm>
       </div>

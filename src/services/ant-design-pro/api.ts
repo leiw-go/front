@@ -248,9 +248,21 @@ export async function getPermissions(options?: { [key: string]: any }) {
 // ========== Lottery Period APIs ==========
 
 /** 获取所有开奖记录 GET /api/lottery/periods */
-export async function getLotteryPeriods(options?: { [key: string]: any }) {
-  return request<API.ResponseResult<API.LotteryPeriod[]>>('/api/lottery/periods', {
+export async function getLotteryPeriods(
+  params: {
+    page?: number;
+    size?: number;
+  },
+  options?: { [key: string]: any }
+) {
+  return request<API.ResponseResult<{
+    data: API.LotteryPeriod[];
+    total: number;
+    page: number;
+    size: number;
+  }>>('/api/lottery/periods', {
     method: 'GET',
+    params,
     ...(options || {}),
   });
 }

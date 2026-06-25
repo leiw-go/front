@@ -192,21 +192,16 @@ const PeriodManage: React.FC = () => {
             新增开奖记录
           </Button>,
         ]}
-        request={async () => {
-          const result =
-            (await getLotteryPeriods()) as unknown as API.ResponseResult<
-              API.LotteryPeriod[]
-            >;
-          // Sort by drawDate descending
-          const data = result?.data || [];
-          data.sort((a, b) => {
-            if (!a.drawDate || !b.drawDate) return 0;
-            return b.drawDate.localeCompare(a.drawDate);
+        request={async (params) => {
+          const { current = 1, pageSize = 10 } = params;
+          const result = await getLotteryPeriods({
+            page: current,
+            size: pageSize,
           });
           return {
-            data,
+            data: result?.data?.data || [],
             success: result?.code === 200,
-            total: data.length || 0,
+            total: result?.data?.total || 0,
           };
         }}
         columns={columns}
