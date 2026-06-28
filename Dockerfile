@@ -6,7 +6,8 @@
 # 注意：本镜像使用 legacy builder（无需 buildx），所以 nginx 配置
 # 改用单独的 COPY 文件方式，而不是 heredoc。
 # ============================================================
-FROM node:22-alpine AS build
+# base image 通过 docker.m.daocloud.io 镜像拉取（本机 docker.io 直连被防火墙挡住）
+FROM docker.m.daocloud.io/library/node:22-alpine AS build
 WORKDIR /build
 
 # 先 copy package.json + lock 文件拿依赖缓存
@@ -24,7 +25,7 @@ RUN npm run build
 # ------------------------------------------------------------
 # Runtime 阶段 - 用 nginx 服务静态文件
 # ------------------------------------------------------------
-FROM nginx:1.27-alpine
+FROM docker.m.daocloud.io/library/nginx:1.27-alpine
 RUN apk add --no-cache tzdata \
     && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone \
