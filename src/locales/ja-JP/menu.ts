@@ -1,5 +1,4 @@
 ﻿export default {
-  'menu.welcome': 'ようこそ',
   'menu.more-blocks': 'その他のブロック',
   'menu.home': 'ホーム',
   'menu.admin': '管理者',
@@ -53,4 +52,5 @@
   'menu.chatbot': 'AI アシスタント',
   'menu.lotteryAnalyze': '宝くじ分析',
   'menu.lotteryAnalyze.lottery-analysis': '宝くじ分析',
+  'menu.lottery.lottery-analysis': 'フェーズ番号分析',
 };

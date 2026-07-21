@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 const mockReplace = vi.fn();
 const mockHistory = {
   location: {
-    pathname: '/welcome',
+    pathname: '/chatbot',
     search: '',
     hash: '',
   },
@@ -24,12 +24,10 @@ vi.mock('@/services/ant-design-pro/api', () => ({
 
 vi.mock('@/components', () => ({
   AvatarDropdown: () => null,
-  DocLink: () => null,
   ErrorBoundary: ({ children }: any) => children,
   Footer: () => null,
   LangDropdown: () => null,
   OfflineBanner: () => null,
-  VersionDropdown: () => null,
 }));
 
 vi.mock('@ant-design/pro-components', () => ({
@@ -52,7 +50,7 @@ describe('app getInitialState', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockHistory.location = {
-      pathname: '/welcome',
+      pathname: '/chatbot',
       search: '',
       hash: '',
     };

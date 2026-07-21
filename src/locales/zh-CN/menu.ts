@@ -1,5 +1,4 @@
 export default {
-  'menu.welcome': '欢迎',
   'menu.more-blocks': '更多区块',
   'menu.home': '首页',
   'menu.admin': '管理页',
@@ -56,7 +55,7 @@ export default {
   'menu.system.product-manage': '产品管理',
   'menu.lottery': '大乐透管理',
   'menu.lottery.period-manage': '开奖记录',
-  'menu.lottery.analysis': '数据分析',
+  'menu.lottery.lottery-analysis': '阶段号码分析',
   'menu.lotteryAnalyze': '大乐透分析',
   'menu.lotteryAnalyze.lottery-analysis': '乐透分析',
 };

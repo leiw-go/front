@@ -144,10 +144,10 @@ const Workplace: FC = () => {
               'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
             name: '吴彦祖',
             userid: '00000001',
-            email: 'antdesign@alipay.com',
+            email: 'user@example.com',
             signature: '海纳百川，有容乃大',
-            title: '交互专家',
-            group: '蚂蚁集团－某某某事业群－某某平台部－某某技术部－UED',
+            title: '产品经理',
+            group: '研发部',
           }}
         />
       }

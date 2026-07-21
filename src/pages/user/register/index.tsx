@@ -112,10 +112,7 @@ const Register: React.FC = () => {
             maxWidth: '75vw',
           }}
           logo={<img alt="logo" src="/logo.svg" />}
-          title="Ant Design"
-          subTitle={intl.formatMessage({
-            id: 'pages.layouts.userLayout.title',
-          })}
+          title="Prompt Design"
           initialValues={{}}
           onFinish={async (values) => {
             await handleSubmit(values as API.RegisterParams);

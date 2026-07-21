@@ -31,7 +31,7 @@ describe('Login Page', () => {
       />,
     );
 
-    await rootContainer.findAllByText('Ant Design');
+    await rootContainer.findAllByText('Prompt Design');
 
     act(() => {
       historyRef.current?.push('/user/login');
@@ -40,9 +40,7 @@ describe('Login Page', () => {
     expect(
       rootContainer.baseElement?.querySelector('.ant-pro-form-login-desc')
         ?.textContent,
-    ).toBe(
-      'Ant Design is the most influential web design specification in Xihu district',
-    );
+    ).toBe('');
 
     expect(rootContainer.asFragment()).toMatchSnapshot();
 
@@ -60,19 +58,15 @@ describe('Login Page', () => {
       />,
     );
 
-    await rootContainer.findAllByText('Ant Design');
+    await rootContainer.findAllByText('Prompt Design');
 
-    const userNameInput = await rootContainer.findByPlaceholderText(
-      'Username: admin or user',
-    );
+    const userNameInput = await rootContainer.findByPlaceholderText('Username');
 
     act(() => {
       fireEvent.change(userNameInput, { target: { value: 'admin' } });
     });
 
-    const passwordInput = await rootContainer.findByPlaceholderText(
-      'Password: ant.design',
-    );
+    const passwordInput = await rootContainer.findByPlaceholderText('Password');
 
     act(() => {
       fireEvent.change(passwordInput, { target: { value: 'ant.design' } });
@@ -81,7 +75,7 @@ describe('Login Page', () => {
     await (await rootContainer.findByText('Login')).click();
 
     // Wait for login to succeed and navigate to home page
-    await rootContainer.findByText(/Ant Design Pro/, undefined, {
+    await rootContainer.findByText(/Prompt Design/, undefined, {
       timeout: 10000,
     });
 

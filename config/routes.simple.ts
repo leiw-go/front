@@ -11,12 +11,6 @@ export default [
     ],
   },
   {
-    path: '/welcome',
-    name: '欢迎',
-    icon: 'smile',
-    component: './Welcome',
-  },
-  {
     path: '/admin',
     name: '管理页',
     icon: 'crown',
@@ -41,7 +35,7 @@ export default [
   },
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/chatbot',
   },
   {
     component: './exception/404',
