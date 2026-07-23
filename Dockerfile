@@ -3,23 +3,29 @@
 #   build:   node:22 npm ci + max build
 #   runtime: nginx:alpine serving dist/
 #
-# 注意：本镜像使用 legacy builder（无需 buildx），所以 nginx 配置
-# 改用单独的 COPY 文件方式，而不是 heredoc。
+# 启用 BuildKit (syntax directive + --mount=type=cache)：
+#   - 跨构建复用 npm 缓存，首次之后不必重下依赖
+#   - 配合 `DOCKER_BUILDKIT=1 docker build --progress=plain` 实时回显 stdout
+#   - 避免 legacy builder 的输出缓冲导致 Jenkins 看不到进度
 # ============================================================
+# syntax=docker/dockerfile:1.6
 FROM node:22-alpine AS build
 WORKDIR /build
 
-# 先 copy package.json + lock 文件拿依赖缓存
-COPY package.json package-lock.json* ./
-COPY .npmrc ./
+# 先 copy package.json + lock 文件 + .npmrc 拿依赖缓存
+COPY package.json package-lock.json* .npmrc ./
 
-# 国内镜像加速
-RUN npm config set registry https://registry.npmmirror.com \
+# 国内镜像加速 + 挂载 npm 缓存（跨构建复用）
+RUN --mount=type=cache,target=/root/.npm \
+    --mount=type=cache,target=/build/node_modules/.cache \
+    npm config set registry https://registry.npmmirror.com \
     && npm ci --legacy-peer-deps
 
-# 复制全部源码并构建
+# 复制全部源码并构建；保留 npm 缓存挂载以加速 utoo pack
 COPY . .
-RUN npm run build
+RUN --mount=type=cache,target=/root/.npm \
+    --mount=type=cache,target=/build/node_modules/.cache \
+    npm run build
 
 # ------------------------------------------------------------
 # Runtime 阶段 - 用 nginx 服务静态文件

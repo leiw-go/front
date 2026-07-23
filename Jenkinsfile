@@ -46,6 +46,9 @@ pipeline {
     stages {
 
         stage('1. Build Image') {
+            options {
+                timeout(time: 25, unit: 'MINUTES')
+            }
             steps {
                 script {
                     if (params.CLEAN_IMAGE) {
@@ -55,7 +58,13 @@ pipeline {
                         sh "rm -rf node_modules package-lock.json || true"
                     }
                 }
-                sh "docker build -t ${FRONTEND_IMAGE}:${params.FRONTEND_TAG} ."
+                // BuildKit + --progress=plain：实时回显 RUN 的 stdout，
+                // 避免 legacy builder 缓冲输出导致 Jenkins 30 分钟 "假卡死"。
+                sh """
+                    DOCKER_BUILDKIT=1 docker build \
+                        --progress=plain \
+                        -t ${FRONTEND_IMAGE}:${params.FRONTEND_TAG} .
+                """
                 sh "docker images | grep ${FRONTEND_IMAGE} || true"
             }
         }
