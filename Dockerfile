@@ -17,7 +17,6 @@ COPY package.json package-lock.json* .npmrc ./
 
 # 国内镜像加速 + 挂载 npm 缓存（跨构建复用）
 RUN --mount=type=cache,target=/root/.npm \
-    --mount=type=cache,target=/build/node_modules/.cache \
     npm config set registry https://registry.npmmirror.com \
     && npm ci --legacy-peer-deps
 
