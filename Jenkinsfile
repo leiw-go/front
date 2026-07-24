@@ -44,6 +44,13 @@ pipeline {
         stage('1. Build Image') {
             steps {
                 script {
+                    // 探测可用的 docker 镜像源（规避单一源挂掉导致 build 全失败）
+                    env.DOCKER_MIRROR = sh(
+                        returnStdout: true,
+                        script: 'bash ./scripts/jenkins/pick-docker-mirror.sh'
+                    ).trim()
+                    echo "🔍 picked DOCKER_MIRROR=${env.DOCKER_MIRROR}"
+
                     if (params.CLEAN_IMAGE) {
                         sh "docker rmi -f ${FRONTEND_IMAGE}:${params.FRONTEND_TAG} || true"
                     }
@@ -51,7 +58,7 @@ pipeline {
                         sh 'rm -rf node_modules package-lock.json || true'
                     }
                 }
-                sh "docker build -t ${FRONTEND_IMAGE}:${params.FRONTEND_TAG} ."
+                sh "docker build --build-arg DOCKER_MIRROR=${env.DOCKER_MIRROR} -t ${FRONTEND_IMAGE}:${params.FRONTEND_TAG} ."
                 sh "docker images --format '{{.Repository}}:{{.Tag}} {{.Size}}' | grep ${FRONTEND_IMAGE} || true"
             }
         }

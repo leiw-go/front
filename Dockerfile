@@ -13,6 +13,11 @@
 # syntax=docker/dockerfile:1.6
 # 国内 build：从镜像源拉 base 镜像；registry-mirrors 不影响 FROM，必须改这里
 #
+# 这个 ARG 是"消费者"——Dockerfile 不知道该用哪个镜像源，决策逻辑在外部：
+#   - Jenkinsfile stage 1 跑 scripts/jenkins/pick-docker-mirror.sh
+#     自动探测候选源，把第一个活的通过 --build-arg DOCKER_MIRROR=<host> 注入
+#   - 本地直接 docker build 不带 --build-arg 时，退回下面的默认值
+#
 # Docker Hub 国内常用镜像源（按整体可用性排序）：
 #   - dockerproxy.cn           DockerProxy（默认，多数机器稳定）
 #   - docker.m.1ms.run         1ms.run（较新，速度通常最快）
