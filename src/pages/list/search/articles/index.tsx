@@ -265,9 +265,9 @@ const Articles: FC = () => {
                 }
                 description={
                   <Flex wrap gap="small">
-                    <Tag>Ant Design</Tag>
+                    <Tag>演示</Tag>
                     <Tag>设计语言</Tag>
-                    <Tag>蚂蚁集团</Tag>
+                    <Tag>示例</Tag>
                   </Flex>
                 }
               />

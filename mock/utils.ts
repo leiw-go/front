@@ -5,14 +5,14 @@
 
 // 公共数据数组
 export const titles = [
-  'Alipay',
-  'Angular',
-  'Ant Design',
-  'Ant Design Pro',
-  'Bootstrap',
-  'React',
-  'Vue',
-  'Webpack',
+  'Engineering',
+  'Analytics',
+  'Design',
+  'Platform',
+  'Frontend',
+  'Backend',
+  'DevOps',
+  'QA',
 ];
 
 export const avatars = [
@@ -123,17 +123,17 @@ export function fakeList(count: number) {
       status: ['active', 'exception', 'normal'][i % 3],
       percent: Math.ceil(Math.random() * 50) + 50,
       logo: avatars[i % 8],
-      href: 'https://ant.design',
+      href: '#',
       updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 2 * i).getTime(),
       createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2 * i).getTime(),
       subDescription: desc[i % 5],
-      description: '在中台产品的研发过程中，会出现不同的设计规范和实现方式，但其中往往存在很多类似的页面和组件，这些类似的组件会被抽离成一套标准规范。',
+      description: '这是一段示例描述，用于演示列表项内容的展示效果。',
       activeUser: Math.ceil(Math.random() * 100000) + 100000,
       newUser: Math.ceil(Math.random() * 1000) + 1000,
       star: Math.ceil(Math.random() * 100) + 100,
       like: Math.ceil(Math.random() * 100) + 100,
       message: Math.ceil(Math.random() * 10) + 10,
-      content: '段落示意：蚂蚁集团设计平台 ant.design，用最小的工作量，无缝接入蚂蚁集团生态，提供跨越设计与开发的体验解决方案。蚂蚁集团设计平台 ant.design，用最小的工作量，无缝接入蚂蚁集团生态，提供跨越设计与开发的体验解决方案。',
+      content: '这是一段示例内容，用于演示详情面板中的文本渲染。',
       members,
     });
   }

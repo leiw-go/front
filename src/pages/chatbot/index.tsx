@@ -122,42 +122,42 @@ const ChatbotPage: React.FC = () => {
     { key: 'default', label: '💬 新对话', group: '今天', isDraft: true },
     {
       key: 'preset-1',
-      label: '🧩 Ant Design 的 Form 表单如何做联动校验？',
+      label: '✨ 什么是 Prompt Design？',
       group: '今天',
     },
     {
       key: 'preset-2',
-      label: '📋 ProTable 如何自定义工具栏按钮？',
+      label: '📝 如何创建一个提示词模板？',
       group: '今天',
     },
     {
       key: 'preset-3',
-      label: '🎨 如何用 antd-style 实现暗色主题切换？',
+      label: '🎯 如何优化提示词以获得更好的输出？',
       group: '昨天',
     },
     {
       key: 'preset-4',
-      label: '🗂️ ProLayout 侧边菜单如何动态生成？',
+      label: '📚 如何管理和组织我的提示词？',
       group: '昨天',
     },
     {
       key: 'preset-5',
-      label: '📊 Ant Design Charts 折线图数据格式',
+      label: '🔗 如何分享我的提示词给团队？',
       group: '昨天',
     },
     {
       key: 'preset-6',
-      label: '🚀 Ant Design Pro 如何接入后端权限系统？',
+      label: '🚀 支持哪些大语言模型？',
       group: '更早',
     },
     {
       key: 'preset-7',
-      label: '🔍 ProForm 中 Select 远程搜索怎么实现？',
+      label: '🔍 如何对比不同模型的输出？',
       group: '更早',
     },
     {
       key: 'preset-8',
-      label: '⚙️ Ant Design Token 定制主题最佳实践',
+      label: '⚙️ 如何配置自定义模型参数？',
       group: '更早',
     },
   ]);

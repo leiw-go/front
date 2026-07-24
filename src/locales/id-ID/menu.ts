@@ -1,5 +1,4 @@
 ﻿export default {
-  'menu.welcome': 'Selamat Datang',
   'menu.more-blocks': 'Blok Lainnya',
   'menu.home': 'Beranda',
   'menu.admin': 'Admin',
@@ -53,4 +52,5 @@
   'menu.chatbot': 'Asisten AI',
   'menu.lotteryAnalyze': 'Analisis Lotre',
   'menu.lotteryAnalyze.lottery-analysis': 'Analisis Lotre',
+  'menu.lottery.lottery-analysis': 'Analisis Nomor Fase',
 };

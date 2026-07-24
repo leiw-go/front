@@ -1,5 +1,4 @@
 export default {
-  'menu.welcome': 'Welcome',
   'menu.more-blocks': 'More Blocks',
   'menu.home': 'Home',
   'menu.admin': 'Admin',
@@ -57,6 +56,7 @@ export default {
   'menu.lottery': 'Lottery Management',
   'menu.lottery.period-manage': 'Draw Records',
   'menu.lottery.analysis': 'Data Analysis',
+  'menu.lottery.lottery-analysis': 'Phase Number Analysis',
   'menu.lotteryAnalyze': 'Lottery Analyze',
   'menu.lotteryAnalyze.lottery-analysis': 'SupperLottery',
 };

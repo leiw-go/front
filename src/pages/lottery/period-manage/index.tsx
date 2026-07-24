@@ -197,9 +197,18 @@ const PeriodManage: React.FC = () => {
             page: current,
             size: pageSize,
           });
+          // Debug logging for production troubleshooting
+          console.log(
+            '[PeriodManage] result:',
+            JSON.stringify(result)?.slice(0, 500),
+          );
+          console.log('[PeriodManage] result.code:', result?.code);
+          console.log('[PeriodManage] result.data:', result?.data);
           // Ensure data is always an array to prevent sort() errors
           const rawData = result?.data?.data;
+          console.log('[PeriodManage] rawData:', rawData);
           const data = Array.isArray(rawData) ? rawData : [];
+          console.log('[PeriodManage] data:', data?.length, 'items');
           return {
             data,
             success: result?.code === 200,

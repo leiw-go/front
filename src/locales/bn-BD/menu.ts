@@ -1,5 +1,4 @@
 ﻿export default {
-  'menu.welcome': 'স্বাগতম',
   'menu.more-blocks': 'আরো ব্লক',
   'menu.home': 'হোম',
   'menu.admin': 'অ্যাডমিন',
@@ -53,4 +52,5 @@
   'menu.chatbot': 'AI সহায়ক',
   'menu.lotteryAnalyze': 'লটারি বিশ্লেষণ',
   'menu.lotteryAnalyze.lottery-analysis': 'লটারি বিশ্লেষণ',
+  'menu.lottery.lottery-analysis': 'ফেজ নম্বর বিশ্লেষণ',
 };

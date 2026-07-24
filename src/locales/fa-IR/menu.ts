@@ -1,5 +1,4 @@
 ﻿export default {
-  'menu.welcome': 'خوش آمدید',
   'menu.more-blocks': 'بلوک‌های بیشتر',
   'menu.home': 'خانه',
   'menu.admin': 'مدیریت',
@@ -53,4 +52,5 @@
   'menu.chatbot': 'دستیار هوشمند',
   'menu.lotteryAnalyze': 'تحلیل لاتاری',
   'menu.lotteryAnalyze.lottery-analysis': 'تحلیل لاتاری',
+  'menu.lottery.lottery-analysis': 'تحلیل شماره فاز',
 };

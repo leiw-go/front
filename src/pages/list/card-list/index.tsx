@@ -16,11 +16,7 @@ const CardList = () => {
   const list = data?.list || [];
   const content = (
     <div className={styles.pageHeaderContent}>
-      <p>
-        段落示意：蚂蚁集团设计平台
-        ant.design，用最小的工作量，无缝接入蚂蚁集团生态，
-        提供跨越设计与开发的体验解决方案。
-      </p>
+      <p>这是一段示例描述，用于演示卡片列表页面的内容展示效果。</p>
       <div className={styles.contentLink}>
         <a href="#">
           <img

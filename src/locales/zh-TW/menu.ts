@@ -1,5 +1,4 @@
 ﻿export default {
-  'menu.welcome': '歡迎',
   'menu.more-blocks': '更多區塊',
   'menu.home': '首頁',
   'menu.admin': '權限',
@@ -53,4 +52,5 @@
   'menu.chatbot': 'AI 助手',
   'menu.lotteryAnalyze': '樂透分析',
   'menu.lotteryAnalyze.lottery-analysis': '樂透分析',
+  'menu.lottery.lottery-analysis': '階段號碼分析',
 };

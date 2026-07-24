@@ -3,7 +3,6 @@ import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import {
   FormattedMessage,
   Helmet,
-  Link,
   SelectLang,
   useIntl,
   useModel,
@@ -36,10 +35,6 @@ const useStyles = createStyles(({ token }) => {
       backgroundImage:
         "url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')",
       backgroundSize: '100% 100%',
-    },
-    footer: {
-      textAlign: 'center',
-      marginTop: 16,
     },
   };
 });
@@ -159,10 +154,7 @@ const Login: React.FC = () => {
             maxWidth: '75vw',
           }}
           logo={<img alt="logo" src="/logo.svg" />}
-          title="Ant Design"
-          subTitle={intl.formatMessage({
-            id: 'pages.layouts.userLayout.title',
-          })}
+          title="Prompt Design"
           initialValues={{
             autoLogin: true,
           }}
@@ -240,12 +232,6 @@ const Login: React.FC = () => {
               />
             </>
           )}
-
-          <div className={styles.footer}>
-            <span style={{ color: '#595959' }}>
-              还没有账号？<Link to="/user/register">立即注册</Link>
-            </span>
-          </div>
         </LoginForm>
       </div>
       <Footer />

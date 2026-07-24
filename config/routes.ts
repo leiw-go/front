@@ -44,12 +44,6 @@ export default [
     ],
   },
   {
-    path: '/welcome',
-    name: 'welcome',
-    icon: 'home',
-    component: './Welcome',
-  },
-  {
     path: '/admin',
     name: 'admin',
     icon: 'crown',
@@ -286,6 +280,7 @@ export default [
     name: 'exception',
     icon: 'warning',
     path: '/exception',
+    access: 'canAdmin',
     routes: [
       {
         path: '/exception',
@@ -351,7 +346,7 @@ export default [
   },
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/chatbot',
   },
   {
     component: './exception/404',

@@ -1,5 +1,4 @@
 ﻿export default {
-  'menu.welcome': 'Bem-vindo',
   'menu.more-blocks': 'Mais Blocos',
   'menu.home': 'Início',
   'menu.admin': 'Admin',
@@ -55,4 +54,5 @@
   'menu.chatbot': 'Assistente IA',
   'menu.lotteryAnalyze': 'Análise de Loteria',
   'menu.lotteryAnalyze.lottery-analysis': 'Análise de Loteria',
+  'menu.lottery.lottery-analysis': 'Análise de Números por Fase',
 };
