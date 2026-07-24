@@ -10,7 +10,6 @@
 //   3. 触发方式：手动 Build with Parameters，或加 GitHub webhook
 //
 // 部署流程：
-//   0. 装 docker CLI（如果容器里没有）—— 静态二进制，幂等
 //   1. 多阶段构建镜像（node:22-alpine build → nginx:alpine serve）
 //   2. 停掉旧 frontend 容器，启动新容器并 publish 8000 到宿主机
 //   3. 等容器内 nginx 就绪，curl /healthz 验证
@@ -34,8 +33,6 @@ pipeline {
         FRONTEND_NAME  = 'frontend'
         FRONTEND_PORT  = '8000'
         HOST_NETWORK   = 'deploy-net'
-        // 把 $HOME/.local/bin 放到 PATH 头部，这样 stage 0 安装的 docker CLI 后续阶段也能找到
-        PATH = "$HOME/.local/bin:$PATH"
     }
 
     options {
@@ -43,29 +40,6 @@ pipeline {
     }
 
     stages {
-
-        stage('0. Install docker CLI') {
-            steps {
-                sh '''
-                    set -eux
-                    DOCKER_BIN="$HOME/.local/bin/docker"
-                    if [ -x "$DOCKER_BIN" ] && "$DOCKER_BIN" version >/dev/null 2>&1; then
-                        echo "==> docker CLI already installed: $("$DOCKER_BIN" --version)"
-                        exit 0
-                    fi
-
-                    DOCKER_VERSION=27.5.1
-                    mkdir -p "$(dirname "$DOCKER_BIN")"
-                    curl -fsSL "https://mirrors.aliyun.com/docker-ce/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" -o /tmp/docker.tgz
-                    tar -xzf /tmp/docker.tgz -C /tmp/
-                    mv /tmp/docker/docker "$DOCKER_BIN"
-                    rm -rf /tmp/docker /tmp/docker.tgz
-
-                    "$DOCKER_BIN" --version
-                    "$DOCKER_BIN" info >/dev/null 2>&1 || { echo "WARN: docker info failed (socket not reachable?)"; }
-                '''
-            }
-        }
 
         stage('1. Build Image') {
             steps {
@@ -85,38 +59,12 @@ pipeline {
         stage('2. Deploy Container') {
             steps {
                 sh """
-                    set -eux
-
-                    # deploy-net 与 backend / config-server 共用同一网络
-                    docker network inspect ${HOST_NETWORK} >/dev/null 2>&1 || docker network create ${HOST_NETWORK}
-
-                    # 停掉旧容器
-                    docker rm -f ${FRONTEND_NAME} 2>/dev/null || true
-
-                    # 启动新容器（端口直接 publish 到宿主机，与 backend 形态一致）
-                    docker run -d \\
-                        --name ${FRONTEND_NAME} \\
-                        --network ${HOST_NETWORK} \\
-                        --restart unless-stopped \\
-                        -p ${FRONTEND_PORT}:${FRONTEND_PORT} \\
-                        --log-driver json-file \\
-                        --log-opt max-size=50m \\
-                        --log-opt max-file=10 \\
-                        ${FRONTEND_IMAGE}:${params.FRONTEND_TAG}
-
-                    # 等容器内 nginx 就绪（健康检查）
-                    for i in 1 2 3 4 5 6 7 8; do
-                        sleep 2
-                        if docker exec ${FRONTEND_NAME} wget -qO- http://127.0.0.1:${FRONTEND_PORT}/healthz 2>/dev/null | grep -q ok; then
-                            echo "==> frontend container ready"
-                            break
-                        fi
-                        if [ \$i -eq 8 ]; then
-                            echo "==> frontend container not ready; check: docker logs ${FRONTEND_NAME}"
-                            docker logs ${FRONTEND_NAME} || true
-                            exit 1
-                        fi
-                    done
+                    IMAGE_NAME=${FRONTEND_IMAGE} \
+                    IMAGE_TAG=${params.FRONTEND_TAG} \
+                    CONTAINER_NAME=${FRONTEND_NAME} \
+                    NETWORK=${HOST_NETWORK} \
+                    PORT=${FRONTEND_PORT} \
+                        bash ./scripts/jenkins/deploy-container.sh
                 """
             }
         }
