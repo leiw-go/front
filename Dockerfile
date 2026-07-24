@@ -11,13 +11,31 @@
 # 阶段内的具体命令抽到 scripts/docker/*.sh，方便本地复跑与维护
 # ============================================================
 # syntax=docker/dockerfile:1.6
-# 国内 build：从 DaoCloud 镜像拉 base 镜像；registry-mirrors 不影响 FROM，必须改这里
+# 国内 build：从镜像源拉 base 镜像；registry-mirrors 不影响 FROM，必须改这里
+#
+# Docker Hub 国内常用镜像源（按整体可用性排序）：
+#   - dockerproxy.cn           DockerProxy（默认，多数机器稳定）
+#   - docker.m.1ms.run         1ms.run（较新，速度通常最快）
+#   - hub-mirror.c.163.com     网易（公网可用，偶尔慢）
+#   - docker.m.daocloud.io     DaoCloud（某些网络环境会 TLS 握手超时）
+#   - docker.mirrors.ustc.edu.cn  中科大（历史不稳，慎用）
+#
+# 部署前先测哪个源活着（任意机器 5 秒就好）：
+#   for h in dockerproxy.cn docker.m.1ms.run hub-mirror.c.163.com docker.m.daocloud.io; do
+#     curl -fsSL --max-time 5 https://$h/v2/ -o /dev/null \
+#       && echo "$h OK" || echo "$h DOWN"
+#   done
+#
+# 选好后，build 时用 --build-arg 覆盖默认：
+#   docker build --build-arg DOCKER_MIRROR=docker.m.1ms.run -t xxx .
 #
 # 三层缓存（从快到慢）：
 #   1. Docker layer cache（默认）：package.json 不变 → npm ci 整层复用
 #   2. BuildKit --mount=type=cache：源文件变了 / dockerignore 失效，也能复用下载元数据
 #   3. 外部 registry cache（CI 用）：docker buildx --cache-from/--cache-to type=registry，跨机器复用
-FROM docker.m.daocloud.io/library/node:22-alpine AS build
+ARG DOCKER_MIRROR=dockerproxy.cn
+
+FROM ${DOCKER_MIRROR}/library/node:22-alpine AS build
 WORKDIR /build
 
 # 兜底镜像源：所有子进程（npm / npx / Umi Max 插件）的 registry 都走国内
@@ -47,7 +65,7 @@ RUN --mount=type=cache,id=npm,target=/root/.npm,sharing=locked \
 # ------------------------------------------------------------
 # Runtime 阶段 - 用 nginx 服务静态文件
 # ------------------------------------------------------------
-FROM docker.m.daocloud.io/library/nginx:1.27-alpine
+FROM ${DOCKER_MIRROR}/library/nginx:1.27-alpine
 COPY scripts/docker/setup-runtime.sh /usr/local/bin/setup-runtime.sh
 RUN chmod +x /usr/local/bin/setup-runtime.sh \
     && /usr/local/bin/setup-runtime.sh
