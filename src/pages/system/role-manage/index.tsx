@@ -1,4 +1,4 @@
-import { PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import {
   ModalForm,
@@ -10,6 +10,7 @@ import {
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, Drawer, message, Space, Tag } from 'antd';
 import React, { useState } from 'react';
+import ActionButton from '@/components/ActionButton';
 import {
   createRole,
   deleteRole,
@@ -123,28 +124,32 @@ const RoleManage: React.FC = () => {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
-      render: (_, record) => [
-        <a
-          key="edit"
-          onClick={() => {
-            setCurrentRow(record);
-            setEditModalOpen(true);
-          }}
-        >
-          编辑
-        </a>,
-        <a
-          key="delete"
-          onClick={async () => {
-            if (record.id) {
-              await delRoleRun(record.id);
-            }
-          }}
-          style={{ color: 'red' }}
-        >
-          删除
-        </a>,
-      ],
+      width: 80,
+      fixed: 'right',
+      render: (_, record) => (
+        <Space size={4}>
+          <ActionButton
+            key="edit"
+            title="编辑"
+            icon={<EditOutlined />}
+            onClick={() => {
+              setCurrentRow(record);
+              setEditModalOpen(true);
+            }}
+          />
+          <ActionButton
+            key="delete"
+            title="删除"
+            icon={<DeleteOutlined />}
+            danger
+            onClick={async () => {
+              if (record.id) {
+                await delRoleRun(record.id);
+              }
+            }}
+          />
+        </Space>
+      ),
     },
   ];
 
@@ -155,6 +160,7 @@ const RoleManage: React.FC = () => {
         headerTitle="角色列表"
         actionRef={actionRef}
         rowKey="id"
+        scroll={{ x: 'max-content' }}
         search={{
           labelWidth: 'auto',
         }}

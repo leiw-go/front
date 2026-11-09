@@ -295,6 +295,2527 @@
     },
     "/swagger": {
       "x-swagger-pipe": "swagger_raw"
+    },
+    "/api/crm/shipments/{id}": {
+      "put": {
+        "tags": ["CRM Shipment"],
+        "summary": "Update shipment",
+        "description": "更新发货单",
+        "operationId": "updateShipment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmShipmentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmShipmentDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/quotations/{id}": {
+      "get": {
+        "tags": ["CRM Quotation"],
+        "summary": "Get quotation",
+        "description": "查询报价单详情，含明细、金额汇总与利润",
+        "operationId": "getQuotation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmQuotationDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["CRM Quotation"],
+        "summary": "Update quotation",
+        "description": "更新报价单（仅 DRAFT 可改），改完服务端重算",
+        "operationId": "updateQuotation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmQuotationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmQuotationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/products/{id}": {
+      "get": {
+        "tags": ["CRM Product"],
+        "summary": "Get product",
+        "description": "查询产品详情，含各币种参考价",
+        "operationId": "getProduct",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmProductDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["CRM Product"],
+        "summary": "Update product",
+        "description": "更新产品",
+        "operationId": "updateProduct_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmProductRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmProductDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["CRM Product"],
+        "summary": "Delete product",
+        "description": "逻辑删除产品",
+        "operationId": "deleteProduct_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/products/{id}/prices": {
+      "get": {
+        "tags": ["CRM Product"],
+        "summary": "List product prices",
+        "description": "查询产品的多币种参考价",
+        "operationId": "listPrices",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultListCrmProductPriceDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["CRM Product"],
+        "summary": "Replace product prices",
+        "description": "批量维护多币种参考价（整批覆盖）",
+        "operationId": "replacePrices",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CrmProductPriceRequest"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultListCrmProductPriceDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/orders/{id}": {
+      "get": {
+        "tags": ["CRM Order"],
+        "summary": "Get order",
+        "description": "查询订单详情，含明细、发货与收款",
+        "operationId": "getOrder",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmOrderDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["CRM Order"],
+        "summary": "Update order",
+        "description": "更新订单，仅未发货可改",
+        "operationId": "updateOrder",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmOrderRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmOrderDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["CRM Order"],
+        "summary": "Delete order",
+        "description": "逻辑删除订单，已发货不可删",
+        "operationId": "deleteOrder",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/opportunities/{id}": {
+      "get": {
+        "tags": ["CRM Opportunity"],
+        "summary": "Get opportunity",
+        "description": "查询商机详情",
+        "operationId": "getOpportunity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmOpportunityDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["CRM Opportunity"],
+        "summary": "Update opportunity",
+        "description": "更新商机（含推进阶段）",
+        "operationId": "updateOpportunity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmOpportunityRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmOpportunityDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["CRM Opportunity"],
+        "summary": "Delete opportunity",
+        "description": "逻辑删除商机",
+        "operationId": "deleteOpportunity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/messages/{id}/read": {
+      "put": {
+        "tags": ["CRM Message"],
+        "summary": "Mark message read",
+        "description": "标记消息已读",
+        "operationId": "markRead",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/messages/read-all": {
+      "put": {
+        "tags": ["CRM Message"],
+        "summary": "Mark all messages read",
+        "description": "全部标记已读，可按类型限定",
+        "operationId": "markAllRead",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageQueryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultMapStringInteger"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/inquiries/{id}": {
+      "get": {
+        "tags": ["CRM Inquiry"],
+        "summary": "Get inquiry",
+        "description": "查询询盘详情，含关联报价单",
+        "operationId": "getInquiry",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmInquiryDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["CRM Inquiry"],
+        "summary": "Update inquiry",
+        "description": "更新询盘",
+        "operationId": "updateInquiry",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmInquiryRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmInquiryDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/customers/{id}": {
+      "get": {
+        "tags": ["CRM Customer"],
+        "summary": "Get customer",
+        "description": "查询客户详情",
+        "operationId": "getCustomer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCustomerDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["CRM Customer"],
+        "summary": "Update customer",
+        "description": "更新客户",
+        "operationId": "updateCustomer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCustomerDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["CRM Customer"],
+        "summary": "Delete customer",
+        "description": "逻辑删除客户",
+        "operationId": "deleteCustomer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/currencies/rates": {
+      "get": {
+        "tags": ["CRM Currency"],
+        "summary": "List currency rates",
+        "description": "汇率列表，只读本地表",
+        "operationId": "listRates",
+        "parameters": [
+          {
+            "name": "baseCurrency",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "quoteCurrency",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultListCrmCurrencyRateDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["CRM Currency"],
+        "summary": "Save manual currency rate",
+        "description": "手工维护汇率，同步任务不覆盖 MANUAL 行",
+        "operationId": "saveManualRate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmCurrencyRateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmCurrencyRateDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/contacts/{contactId}": {
+      "get": {
+        "tags": ["CRM Contact"],
+        "summary": "Get customer contact",
+        "description": "查询联系人详情",
+        "operationId": "getById",
+        "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCustomerContactDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["CRM Contact"],
+        "summary": "Update customer contact",
+        "description": "更新联系人",
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerContactRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCustomerContactDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["CRM Contact"],
+        "summary": "Delete customer contact",
+        "description": "删除联系人（逻辑删除）",
+        "operationId": "delete",
+        "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/shipments": {
+      "get": {
+        "tags": ["CRM Shipment"],
+        "summary": "List shipments",
+        "description": "分页查询发货单列表",
+        "operationId": "listShipments",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CrmShipmentQueryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultPageResponseCrmShipmentDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["CRM Shipment"],
+        "summary": "Create shipment",
+        "description": "新建发货单，首次发货时订单置 SHIPPED",
+        "operationId": "createShipment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmShipmentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmShipmentDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/receivables/{id}/writeoff": {
+      "post": {
+        "tags": ["CRM Receivable"],
+        "summary": "Write off receivable",
+        "description": "登记收款并核销应收",
+        "operationId": "writeOff",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmReceivableWriteOffRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmReceivableDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/quotations": {
+      "get": {
+        "tags": ["CRM Quotation"],
+        "summary": "List quotations",
+        "description": "分页查询报价单列表",
+        "operationId": "listQuotations",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CrmQuotationQueryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultPageResponseCrmQuotationDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["CRM Quotation"],
+        "summary": "Create quotation",
+        "description": "新建报价单，单价与金额由服务端计算",
+        "operationId": "createQuotation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmQuotationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmQuotationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/quotations/{id}/submit": {
+      "post": {
+        "tags": ["CRM Quotation"],
+        "summary": "Submit quotation",
+        "description": "提交发送（DRAFT → SENT）",
+        "operationId": "submit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmQuotationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/quotations/{id}/reject": {
+      "post": {
+        "tags": ["CRM Quotation"],
+        "summary": "Reject quotation",
+        "description": "客户拒绝（SENT → REJECTED），必须填原因",
+        "operationId": "reject",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmQuotationRejectRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmQuotationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/quotations/{id}/recalculate": {
+      "post": {
+        "tags": ["CRM Quotation"],
+        "summary": "Recalculate quotation",
+        "description": "按当前加价率 / 折扣重算整单（覆盖非手工改价的行）",
+        "operationId": "recalculate",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmQuotationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/quotations/{id}/confirm": {
+      "post": {
+        "tags": ["CRM Quotation"],
+        "summary": "Confirm quotation",
+        "description": "客户确认（SENT → CONFIRMED）",
+        "operationId": "confirm",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmQuotationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/quotations/calculate": {
+      "post": {
+        "tags": ["CRM Quotation"],
+        "summary": "Calculate quotation",
+        "description": "试算：只算不落库，返回每行单价 / 金额与单头汇总",
+        "operationId": "calculate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmQuotationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmQuotationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/products": {
+      "get": {
+        "tags": ["CRM Product"],
+        "summary": "List products",
+        "description": "分页查询产品列表",
+        "operationId": "listProducts",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CrmProductQueryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultPageResponseCrmProductDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["CRM Product"],
+        "summary": "Create product",
+        "description": "新建产品",
+        "operationId": "createProduct_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmProductRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmProductDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/orders": {
+      "get": {
+        "tags": ["CRM Order"],
+        "summary": "List orders",
+        "description": "分页查询订单列表",
+        "operationId": "listOrders",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CrmOrderQueryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultPageResponseCrmOrderDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["CRM Order"],
+        "summary": "Create order",
+        "description": "新建订单，可带 quotationId 由报价生成",
+        "operationId": "createOrder",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmOrderRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmOrderDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/orders/{id}/ship": {
+      "post": {
+        "tags": ["CRM Order"],
+        "summary": "Ship order",
+        "description": "登记发货，首次发货时订单置 SHIPPED",
+        "operationId": "shipOrder",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmShipmentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmOrderDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/orders/{id}/receive": {
+      "post": {
+        "tags": ["CRM Order"],
+        "summary": "Receive order payment",
+        "description": "登记收款，核销指定应收",
+        "operationId": "receiveOrder",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmOrderReceiveRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmOrderDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/opportunities": {
+      "get": {
+        "tags": ["CRM Opportunity"],
+        "summary": "List opportunities",
+        "description": "分页查询商机列表",
+        "operationId": "listOpportunities",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CrmOpportunityQueryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultPageResponseCrmOpportunityDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["CRM Opportunity"],
+        "summary": "Create opportunity",
+        "description": "新建商机",
+        "operationId": "createOpportunity",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmOpportunityRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmOpportunityDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/opportunities/{id}/stage": {
+      "post": {
+        "tags": ["CRM Opportunity"],
+        "summary": "Change opportunity stage",
+        "description": "推进商机阶段，置 LOST 必须填 lostReason",
+        "operationId": "changeStage",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmOpportunityStageRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmOpportunityDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/messages": {
+      "get": {
+        "tags": ["CRM Message"],
+        "summary": "List messages",
+        "description": "我的消息列表，未读优先",
+        "operationId": "listMessages",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/MessageQueryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultPageResponseMessageDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["CRM Message"],
+        "summary": "Send message",
+        "description": "发送人工消息给同事",
+        "operationId": "sendMessage",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageSendRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultMapStringInteger"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/inquiries": {
+      "get": {
+        "tags": ["CRM Inquiry"],
+        "summary": "List inquiries",
+        "description": "分页查询询盘列表，可按状态 / 客户 / 负责人 / 超时未报价筛选",
+        "operationId": "listInquiries",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CrmInquiryQueryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultPageResponseCrmInquiryDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["CRM Inquiry"],
+        "summary": "Create inquiry",
+        "description": "新建询盘",
+        "operationId": "createInquiry",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmInquiryRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmInquiryDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/inquiries/{id}/quotations": {
+      "post": {
+        "tags": ["CRM Inquiry"],
+        "summary": "Create quotation from inquiry",
+        "description": "基于询盘创建报价单（新版本）",
+        "operationId": "createQuotation_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmQuotationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmQuotationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/email/templates": {
+      "get": {
+        "tags": ["CRM Email"],
+        "summary": "List email templates",
+        "description": "邮件模板列表",
+        "operationId": "listTemplates",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultListCrmEmailTemplateDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["CRM Email"],
+        "summary": "Save email template",
+        "description": "新建或更新邮件模板",
+        "operationId": "saveTemplate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmEmailTemplateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmEmailTemplateDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/email/templates/{id}/preview": {
+      "post": {
+        "tags": ["CRM Email"],
+        "summary": "Preview email template",
+        "description": "预览模板渲染结果",
+        "operationId": "preview",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmEmailPreviewDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/email/campaigns": {
+      "get": {
+        "tags": ["CRM Email"],
+        "summary": "List email campaigns",
+        "description": "邮件群发任务列表",
+        "operationId": "listCampaigns",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultListCrmEmailCampaignDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["CRM Email"],
+        "summary": "Create email campaign",
+        "description": "创建邮件群发任务",
+        "operationId": "createCampaign",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrmEmailCampaignRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmEmailCampaignDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/email/campaigns/{id}/send": {
+      "post": {
+        "tags": ["CRM Email"],
+        "summary": "Send email campaign",
+        "description": "执行邮件群发（本期只落库发送记录）",
+        "operationId": "send",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmEmailCampaignDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/customers": {
+      "get": {
+        "tags": ["CRM Customer"],
+        "summary": "List customers",
+        "description": "分页查询客户列表",
+        "operationId": "listCustomers",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CustomerQueryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultPageResponseCustomerDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["CRM Customer"],
+        "summary": "Create customer",
+        "description": "新建客户",
+        "operationId": "createCustomer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCustomerDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/customers/{id}/transfer": {
+      "post": {
+        "tags": ["CRM Customer"],
+        "summary": "Transfer customer",
+        "description": "转交客户负责人",
+        "operationId": "transferCustomer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCustomerDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/customers/{customerId}/contacts": {
+      "get": {
+        "tags": ["CRM Contact"],
+        "summary": "List customer contacts",
+        "description": "查询某客户下的联系人列表",
+        "operationId": "listByCustomer",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultListCustomerContactDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["CRM Contact"],
+        "summary": "Create customer contact",
+        "description": "新建联系人，校验邮箱唯一、E.164 电话与客户内号码唯一",
+        "operationId": "create",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerContactRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCustomerContactDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/currencies/sync": {
+      "post": {
+        "tags": ["CRM Currency"],
+        "summary": "Trigger currency sync",
+        "description": "手动触发汇率同步：拉两源、交叉比对、校验后入库",
+        "operationId": "sync",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmCurrencySyncStatusDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/receivables": {
+      "get": {
+        "tags": ["CRM Receivable"],
+        "summary": "List receivables",
+        "description": "分页查询应收列表",
+        "operationId": "listReceivables",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CrmReceivableQueryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultPageResponseCrmReceivableDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/receivables/aging": {
+      "get": {
+        "tags": ["CRM Receivable"],
+        "summary": "Receivable aging",
+        "description": "应收账龄分析：0-30 / 31-60 / 61-90 / 90+ 天",
+        "operationId": "aging",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmReceivableAgingDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/opportunities/pipeline": {
+      "get": {
+        "tags": ["CRM Opportunity"],
+        "summary": "Opportunity pipeline",
+        "description": "销售漏斗统计（按当前 stage 快照）",
+        "operationId": "pipeline",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmOpportunityPipelineDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/messages/{id}": {
+      "get": {
+        "tags": ["CRM Message"],
+        "summary": "Get message",
+        "description": "查询消息详情，并自动标记已读",
+        "operationId": "getMessage",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultMessageDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["CRM Message"],
+        "summary": "Delete message",
+        "description": "删除自己的消息",
+        "operationId": "deleteMessage",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/messages/unread-count": {
+      "get": {
+        "tags": ["CRM Message"],
+        "summary": "Unread count",
+        "description": "未读消息数",
+        "operationId": "unreadCount",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultMapStringLong"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/email/campaigns/{id}/logs": {
+      "get": {
+        "tags": ["CRM Email"],
+        "summary": "List email campaign logs",
+        "description": "邮件群发发送明细",
+        "operationId": "listLogs",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultListCrmEmailLogDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/dashboard/trend": {
+      "get": {
+        "tags": ["CRM Dashboard"],
+        "summary": "Dashboard trend",
+        "description": "业绩趋势（按月 / 按季）",
+        "operationId": "trend",
+        "parameters": [
+          {
+            "name": "granularity",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "periods",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultListCrmDashboardTrendDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/dashboard/top-products": {
+      "get": {
+        "tags": ["CRM Dashboard"],
+        "summary": "Dashboard top products",
+        "description": "产品成交排行（按成交金额）",
+        "operationId": "topProducts",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultListCrmDashboardTopProductDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/dashboard/summary": {
+      "get": {
+        "tags": ["CRM Dashboard"],
+        "summary": "Dashboard summary",
+        "description": "顶部指标",
+        "operationId": "summary",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmDashboardSummaryDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/dashboard/receivable-aging": {
+      "get": {
+        "tags": ["CRM Dashboard"],
+        "summary": "Dashboard receivable aging",
+        "description": "应收账龄（未回款金额按到期日分桶）",
+        "operationId": "receivableAging",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmDashboardReceivableAgingDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/dashboard/pipeline": {
+      "get": {
+        "tags": ["CRM Dashboard"],
+        "summary": "Dashboard pipeline",
+        "description": "销售漏斗",
+        "operationId": "pipeline_1",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmOpportunityPipelineDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/dashboard/customer-source": {
+      "get": {
+        "tags": ["CRM Dashboard"],
+        "summary": "Dashboard customer source",
+        "description": "客户来源分布",
+        "operationId": "customerSource",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultListCrmDashboardCustomerSourceDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/customers/export": {
+      "get": {
+        "tags": ["CRM Customer"],
+        "summary": "Export customers",
+        "description": "导出客户为 Excel（上限 1 万行）",
+        "operationId": "exportCustomers",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CustomerQueryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/crm/customers/dictionary-options": {
+      "get": {
+        "tags": ["CRM Customer"],
+        "summary": "Customer dictionary options",
+        "description": "客户下拉选项",
+        "operationId": "dictionaryOptions",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultDictionaryOptions"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/currencies": {
+      "get": {
+        "tags": ["CRM Currency"],
+        "summary": "List currencies",
+        "description": "币种列表，含熔断状态",
+        "operationId": "listCurrencies",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultListCrmCurrencyDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/currencies/sync-status": {
+      "get": {
+        "tags": ["CRM Currency"],
+        "summary": "Get currency sync status",
+        "description": "最近一次汇率同步批次摘要",
+        "operationId": "syncStatus",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmCurrencySyncStatusDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/currencies/rates/verification": {
+      "get": {
+        "tags": ["CRM Currency"],
+        "summary": "List currency verification details",
+        "description": "交叉比对明细：两源原值、偏差、比对结果与拒绝原因",
+        "operationId": "verification",
+        "parameters": [
+          {
+            "name": "quoteCurrency",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "checkResult",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultListCrmCurrencyRateCheckDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/currencies/convert": {
+      "get": {
+        "tags": ["CRM Currency"],
+        "summary": "Convert amount",
+        "description": "金额折算，交叉汇率走 USD 三角折算",
+        "operationId": "convert",
+        "parameters": [
+          {
+            "name": "amount",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmCurrencyConvertDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/email/templates/{id}": {
+      "delete": {
+        "tags": ["CRM Email"],
+        "summary": "Delete email template",
+        "description": "删除邮件模板",
+        "operationId": "deleteTemplate",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultVoid"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -386,6 +2907,53 @@
           }
         }
       },
+      "ErrorResponse": {
+        "required": ["errorCode"],
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "string",
+            "description": "业务约定的错误码"
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "业务上的错误信息"
+          },
+          "success": {
+            "type": "boolean",
+            "description": "业务上的请求是否成功"
+          }
+        }
+      },
+      "FakeCaptcha": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "LoginParams": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "autoLogin": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
       "LoginResult": {
         "type": "object",
         "properties": {
@@ -400,14 +2968,88 @@
           }
         }
       },
-      "PageParams": {
+      "NoticeIconItem": {
         "type": "object",
         "properties": {
-          "current": {
-            "type": "number"
+          "id": {
+            "type": "string"
           },
-          "pageSize": {
-            "type": "number"
+          "extra": {
+            "type": "string",
+            "format": "any"
+          },
+          "key": {
+            "type": "string"
+          },
+          "read": {
+            "type": "boolean"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "datetime": {
+            "type": "string",
+            "format": "date"
+          },
+          "description": {
+            "type": "string"
+          },
+          "type": {
+            "extensions": {
+              "x-is-enum": true
+            },
+            "$ref": "#/components/schemas/NoticeIconItemType"
+          }
+        }
+      },
+      "NoticeIconItemType": {
+        "title": "NoticeIconItemType",
+        "description": "已读未读列表的枚举",
+        "type": "string",
+        "properties": {},
+        "enum": ["notification", "message", "event"]
+      },
+      "NoticeIconList": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NoticeIconItem"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "description": "列表的内容总数",
+            "format": "int32"
+          },
+          "success": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RuleList": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RuleListItem"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "description": "列表的内容总数",
+            "format": "int32"
+          },
+          "success": {
+            "type": "boolean"
           }
         }
       },
@@ -458,133 +3100,3231 @@
           }
         }
       },
-      "RuleList": {
+      "CrmCurrencyConvertDto": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number"
+          },
+          "fromCurrency": {
+            "type": "string"
+          },
+          "toCurrency": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "rate": {
+            "type": "number"
+          },
+          "convertedAmount": {
+            "type": "number"
+          },
+          "rateMissing": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CrmCurrencyDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "currencyName": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "numericCode": {
+            "type": "string"
+          },
+          "isCommon": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currencyLevel": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "suspectDays": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "recoverDays": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CrmCurrencyRateCheckDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "syncId": {
+            "type": "string"
+          },
+          "baseCurrency": {
+            "type": "string"
+          },
+          "quoteCurrency": {
+            "type": "string"
+          },
+          "primaryRate": {
+            "type": "number"
+          },
+          "primaryDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "secondaryRate": {
+            "type": "number"
+          },
+          "secondaryDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "deviationRate": {
+            "type": "number"
+          },
+          "dateGapDays": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "threshold": {
+            "type": "number"
+          },
+          "checkResult": {
+            "type": "string"
+          },
+          "rejectReason": {
+            "type": "string"
+          },
+          "checkedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CrmCurrencyRateDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "baseCurrency": {
+            "type": "string"
+          },
+          "quoteCurrency": {
+            "type": "string"
+          },
+          "rate": {
+            "type": "number"
+          },
+          "rateDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "source": {
+            "type": "string"
+          },
+          "crossSource": {
+            "type": "string"
+          },
+          "crossStatus": {
+            "type": "string"
+          },
+          "deviationRate": {
+            "type": "number"
+          },
+          "dateGapDays": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CrmCurrencyRateRequest": {
+        "type": "object",
+        "properties": {
+          "quoteCurrency": {
+            "type": "string"
+          },
+          "rate": {
+            "type": "number"
+          },
+          "rateDate": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "CrmCurrencySyncStatusDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "triggerType": {
+            "type": "string"
+          },
+          "syncStatus": {
+            "type": "string"
+          },
+          "primaryStatus": {
+            "type": "string"
+          },
+          "primaryRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "primaryDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "secondaryStatus": {
+            "type": "string"
+          },
+          "secondaryRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "secondaryDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "comparedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "matchedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "warnedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rejectedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "singleCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "savedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skippedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxDeviation": {
+            "type": "number"
+          },
+          "maxDeviationCurrency": {
+            "type": "string"
+          },
+          "errorMsg": {
+            "type": "string"
+          },
+          "durationMs": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "finishedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "stale": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CrmDashboardCustomerSourceDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "customerCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "opportunityCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "opportunityAmountBase": {
+            "type": "number"
+          }
+        }
+      },
+      "CrmDashboardReceivableAgingDto": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalAmountBase": {
+            "type": "number"
+          },
+          "buckets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmReceivableAgingBucketDto"
+            }
+          }
+        }
+      },
+      "CrmDashboardSummaryDto": {
+        "type": "object",
+        "properties": {
+          "monthDealAmount": {
+            "type": "number"
+          },
+          "overdueReceivableAmount": {
+            "type": "number"
+          },
+          "activeCustomerCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "openOpportunityCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "openOpportunityAmountBase": {
+            "type": "number"
+          }
+        }
+      },
+      "CrmDashboardTopProductDto": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string"
+          },
+          "productName": {
+            "type": "string"
+          },
+          "productCode": {
+            "type": "string"
+          },
+          "dealAmountBase": {
+            "type": "number"
+          },
+          "dealQuantity": {
+            "type": "number"
+          },
+          "orderCount": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "CrmDashboardTrendDto": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string"
+          },
+          "newCustomerCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "newOpportunityCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "newOpportunityAmountBase": {
+            "type": "number"
+          },
+          "dealAmountBase": {
+            "type": "number"
+          },
+          "winRate": {
+            "type": "number"
+          }
+        }
+      },
+      "CrmEmailCampaignDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "templateId": {
+            "type": "string"
+          },
+          "targetType": {
+            "type": "string"
+          },
+          "targetValue": {
+            "type": "string"
+          },
+          "campaignStatus": {
+            "type": "string"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "successCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "failCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sentAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ownerId": {
+            "type": "string"
+          }
+        }
+      },
+      "CrmEmailCampaignRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "templateId": {
+            "type": "string"
+          },
+          "targetType": {
+            "type": "string"
+          },
+          "targetValue": {
+            "type": "string"
+          }
+        }
+      },
+      "CrmEmailLogDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "campaignId": {
+            "type": "string"
+          },
+          "contactId": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "sendStatus": {
+            "type": "string"
+          },
+          "errorMsg": {
+            "type": "string"
+          },
+          "sentAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CrmEmailPreviewDto": {
+        "type": "object",
+        "properties": {
+          "subject": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "templateId": {
+            "type": "string"
+          },
+          "unresolvedPlaceholders": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "CrmEmailTemplateDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "templateType": {
+            "type": "string"
+          }
+        }
+      },
+      "CrmEmailTemplateRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "templateType": {
+            "type": "string"
+          }
+        }
+      },
+      "CrmInquiryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "customerId": {
+            "type": "string"
+          },
+          "contactId": {
+            "type": "string"
+          },
+          "inquiryNo": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "targetPrice": {
+            "type": "number"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "expectDeliveryDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "inquiryStatus": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "firstReplyAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "quotations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmQuotationSummaryDto"
+            }
+          },
+          "pendingQuote": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CrmInquiryQueryRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "inquiryStatus": {
+            "type": "string"
+          },
+          "customerId": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "pendingQuote": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CrmInquiryRequest": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string"
+          },
+          "contactId": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "targetPrice": {
+            "type": "number"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "expectDeliveryDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "inquiryStatus": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string"
+          }
+        }
+      },
+      "CrmOpportunityDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "customerId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "amountBase": {
+            "type": "number"
+          },
+          "winRate": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "expectCloseDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "competitor": {
+            "type": "string"
+          },
+          "lostReason": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          }
+        }
+      },
+      "CrmOpportunityPipelineDto": {
+        "type": "object",
+        "properties": {
+          "stages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StageBucket"
+            }
+          },
+          "winRate": {
+            "type": "number"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalAmountBase": {
+            "type": "number"
+          }
+        }
+      },
+      "CrmOpportunityQueryRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "customerId": {
+            "type": "string"
+          },
+          "minAmount": {
+            "type": "number"
+          },
+          "maxAmount": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "CrmOpportunityRequest": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "winRate": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "expectCloseDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "competitor": {
+            "type": "string"
+          },
+          "lostReason": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          }
+        }
+      },
+      "CrmOpportunityStageRequest": {
+        "type": "object",
+        "properties": {
+          "stage": {
+            "type": "string"
+          },
+          "lostReason": {
+            "type": "string"
+          }
+        }
+      },
+      "CrmOrderDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "orderNo": {
+            "type": "string"
+          },
+          "customerId": {
+            "type": "string"
+          },
+          "quotationId": {
+            "type": "string"
+          },
+          "opportunityId": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "totalAmount": {
+            "type": "number"
+          },
+          "totalAmountBase": {
+            "type": "number"
+          },
+          "incoterm": {
+            "type": "string"
+          },
+          "paymentTerm": {
+            "type": "string"
+          },
+          "depositRate": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderStatus": {
+            "type": "string"
+          },
+          "shipDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "expectArriveDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmOrderItemDto"
+            }
+          },
+          "shipments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmShipmentDto"
+            }
+          },
+          "receivables": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmReceivableDto"
+            }
+          }
+        }
+      },
+      "CrmOrderItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "productId": {
+            "type": "string"
+          },
+          "productName": {
+            "type": "string"
+          },
+          "specification": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "unitPrice": {
+            "type": "number"
+          },
+          "amount": {
+            "type": "number"
+          }
+        }
+      },
+      "CrmOrderItemRequest": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string"
+          },
+          "productName": {
+            "type": "string"
+          },
+          "specification": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "unitPrice": {
+            "type": "number"
+          },
+          "amount": {
+            "type": "number"
+          }
+        }
+      },
+      "CrmOrderQueryRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderStatus": {
+            "type": "string"
+          },
+          "customerId": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "shipDateFrom": {
+            "type": "string",
+            "format": "date"
+          },
+          "shipDateTo": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "CrmOrderReceiveRequest": {
+        "type": "object",
+        "properties": {
+          "receivableId": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "paidDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "paymentMethod": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          }
+        }
+      },
+      "CrmOrderRequest": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string"
+          },
+          "quotationId": {
+            "type": "string"
+          },
+          "opportunityId": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "incoterm": {
+            "type": "string"
+          },
+          "paymentTerm": {
+            "type": "string"
+          },
+          "depositRate": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "shipDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "expectArriveDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmOrderItemRequest"
+            }
+          }
+        }
+      },
+      "CrmProductDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "productCode": {
+            "type": "string"
+          },
+          "productName": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "specification": {
+            "type": "string"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "weightKg": {
+            "type": "number"
+          },
+          "volumeCbm": {
+            "type": "number"
+          },
+          "costPrice": {
+            "type": "number"
+          },
+          "costCurrency": {
+            "type": "string"
+          },
+          "defaultPrice": {
+            "type": "number"
+          },
+          "defaultCurrency": {
+            "type": "string"
+          },
+          "moq": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hsCode": {
+            "type": "string"
+          },
+          "origin": {
+            "type": "string"
+          },
+          "productStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "prices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmProductPriceDto"
+            }
+          }
+        }
+      },
+      "CrmProductPriceDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "productId": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "minQuantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date"
+          },
+          "validTo": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "CrmProductPriceRequest": {
+        "type": "object",
+        "properties": {
+          "currencyCode": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "minQuantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date"
+          },
+          "validTo": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "CrmProductQueryRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "category": {
+            "type": "string"
+          },
+          "productStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "keyword": {
+            "type": "string"
+          }
+        }
+      },
+      "CrmProductRequest": {
+        "type": "object",
+        "properties": {
+          "productCode": {
+            "type": "string"
+          },
+          "productName": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "specification": {
+            "type": "string"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "weightKg": {
+            "type": "number"
+          },
+          "volumeCbm": {
+            "type": "number"
+          },
+          "costPrice": {
+            "type": "number"
+          },
+          "costCurrency": {
+            "type": "string"
+          },
+          "defaultPrice": {
+            "type": "number"
+          },
+          "defaultCurrency": {
+            "type": "string"
+          },
+          "moq": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hsCode": {
+            "type": "string"
+          },
+          "origin": {
+            "type": "string"
+          },
+          "productStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "remark": {
+            "type": "string"
+          }
+        }
+      },
+      "CrmQuotationDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "quotationNo": {
+            "type": "string"
+          },
+          "customerId": {
+            "type": "string"
+          },
+          "inquiryId": {
+            "type": "string"
+          },
+          "opportunityId": {
+            "type": "string"
+          },
+          "versionNo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "incoterm": {
+            "type": "string"
+          },
+          "markupRate": {
+            "type": "number"
+          },
+          "discountRate": {
+            "type": "number"
+          },
+          "totalAmount": {
+            "type": "number"
+          },
+          "totalCost": {
+            "type": "number"
+          },
+          "profitAmount": {
+            "type": "number"
+          },
+          "profitRate": {
+            "type": "number"
+          },
+          "totalAmountBase": {
+            "type": "number"
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date"
+          },
+          "quotationStatus": {
+            "type": "string"
+          },
+          "rejectReason": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmQuotationItemDto"
+            }
+          }
+        }
+      },
+      "CrmQuotationItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "productId": {
+            "type": "string"
+          },
+          "productName": {
+            "type": "string"
+          },
+          "specification": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "costPrice": {
+            "type": "number"
+          },
+          "markupRate": {
+            "type": "number"
+          },
+          "discountRate": {
+            "type": "number"
+          },
+          "unitPrice": {
+            "type": "number"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "manualPrice": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CrmQuotationItemRequest": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "markupRate": {
+            "type": "number"
+          },
+          "discountRate": {
+            "type": "number"
+          },
+          "unitPrice": {
+            "type": "number"
+          },
+          "manualPrice": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CrmQuotationQueryRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "customerId": {
+            "type": "string"
+          },
+          "quotationStatus": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "inquiryId": {
+            "type": "string"
+          },
+          "expired": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CrmQuotationRejectRequest": {
+        "type": "object",
+        "properties": {
+          "rejectReason": {
+            "type": "string"
+          }
+        }
+      },
+      "CrmQuotationRequest": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string"
+          },
+          "inquiryId": {
+            "type": "string"
+          },
+          "opportunityId": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "incoterm": {
+            "type": "string"
+          },
+          "markupRate": {
+            "type": "number"
+          },
+          "discountRate": {
+            "type": "number"
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmQuotationItemRequest"
+            }
+          }
+        }
+      },
+      "CrmQuotationSummaryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "quotationNo": {
+            "type": "string"
+          },
+          "versionNo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "totalAmount": {
+            "type": "number"
+          },
+          "quotationStatus": {
+            "type": "string"
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "CrmReceivableAgingBucket": {
+        "type": "object",
+        "properties": {
+          "bucket": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "CrmReceivableAgingBucketDto": {
+        "type": "object",
+        "properties": {
+          "bucket": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "amountBase": {
+            "type": "number"
+          }
+        }
+      },
+      "CrmReceivableAgingDto": {
+        "type": "object",
+        "properties": {
+          "buckets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmReceivableAgingBucket"
+            }
+          },
+          "totalOutstandingAmount": {
+            "type": "number"
+          },
+          "totalOutstandingCount": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "CrmReceivableDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "orderId": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "receivableType": {
+            "type": "string"
+          },
+          "receivableAmount": {
+            "type": "number"
+          },
+          "receivedAmount": {
+            "type": "number"
+          },
+          "outstandingAmount": {
+            "type": "number"
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "receivableStatus": {
+            "type": "string"
+          },
+          "overdueDays": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ownerId": {
+            "type": "string"
+          }
+        }
+      },
+      "CrmReceivableQueryRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderId": {
+            "type": "string"
+          },
+          "receivableStatus": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "dueDateFrom": {
+            "type": "string",
+            "format": "date"
+          },
+          "dueDateTo": {
+            "type": "string",
+            "format": "date"
+          },
+          "overdueOnly": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CrmReceivableWriteOffRequest": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number"
+          },
+          "paidDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "paymentMethod": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          }
+        }
+      },
+      "CrmShipmentDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "orderId": {
+            "type": "string"
+          },
+          "shippingNo": {
+            "type": "string"
+          },
+          "shippingType": {
+            "type": "string"
+          },
+          "departurePort": {
+            "type": "string"
+          },
+          "destinationPort": {
+            "type": "string"
+          },
+          "shipDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "expectArriveDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "actualArriveDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "totalCbm": {
+            "type": "number"
+          },
+          "totalWeight": {
+            "type": "number"
+          },
+          "shipmentStatus": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          }
+        }
+      },
+      "CrmShipmentQueryRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderId": {
+            "type": "string"
+          },
+          "shippingStatus": {
+            "type": "string"
+          },
+          "shipDateFrom": {
+            "type": "string",
+            "format": "date"
+          },
+          "shipDateTo": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "CrmShipmentRequest": {
+        "type": "object",
+        "properties": {
+          "orderId": {
+            "type": "string"
+          },
+          "shippingNo": {
+            "type": "string"
+          },
+          "shippingType": {
+            "type": "string"
+          },
+          "departurePort": {
+            "type": "string"
+          },
+          "destinationPort": {
+            "type": "string"
+          },
+          "shipDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "expectArriveDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "actualArriveDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "totalCbm": {
+            "type": "number"
+          },
+          "totalWeight": {
+            "type": "number"
+          },
+          "shipmentStatus": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          }
+        }
+      },
+      "CustomerContactDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "customerId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "whatsapp": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "isPrimary": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "remark": {
+            "type": "string"
+          }
+        }
+      },
+      "CustomerContactRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "whatsapp": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "isPrimary": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "remark": {
+            "type": "string"
+          }
+        }
+      },
+      "CustomerDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "companyName": {
+            "type": "string"
+          },
+          "shortName": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          },
+          "province": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
+          },
+          "industry": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "level": {
+            "type": "string"
+          },
+          "customerStatus": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "contactCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "opportunityCount": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "CustomerQueryRequest": {
+        "type": "object",
+        "properties": {
+          "companyName": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          },
+          "level": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CustomerRequest": {
+        "type": "object",
+        "properties": {
+          "companyName": {
+            "type": "string"
+          },
+          "shortName": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          },
+          "province": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
+          },
+          "industry": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "level": {
+            "type": "string"
+          },
+          "customerStatus": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          }
+        }
+      },
+      "DictionaryOptions": {
+        "type": "object",
+        "properties": {
+          "levels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "MessageDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "messageType": {
+            "type": "string"
+          },
+          "level": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "senderType": {
+            "type": "string"
+          },
+          "senderId": {
+            "type": "string"
+          },
+          "receiverId": {
+            "type": "string"
+          },
+          "bizType": {
+            "type": "string"
+          },
+          "bizId": {
+            "type": "string"
+          },
+          "bizTitle": {
+            "type": "string"
+          },
+          "read": {
+            "type": "boolean"
+          },
+          "readAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "MessageQueryRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "read": {
+            "type": "boolean"
+          },
+          "messageType": {
+            "type": "string"
+          },
+          "level": {
+            "type": "string"
+          }
+        }
+      },
+      "MessageSendRequest": {
+        "type": "object",
+        "properties": {
+          "receiverId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          }
+        }
+      },
+      "PageResponseCrmInquiryDto": {
         "type": "object",
         "properties": {
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/RuleListItem"
+              "$ref": "#/components/schemas/CrmInquiryDto"
             }
           },
           "total": {
             "type": "integer",
-            "description": "列表的内容总数",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
             "format": "int32"
           },
-          "success": {
-            "type": "boolean"
+          "size": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
-      "FakeCaptcha": {
+      "PageResponseCrmOpportunityDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmOpportunityDto"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PageResponseCrmOrderDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmOrderDto"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PageResponseCrmProductDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmProductDto"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PageResponseCrmQuotationDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmQuotationDto"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PageResponseCrmReceivableDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmReceivableDto"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PageResponseCrmShipmentDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmShipmentDto"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PageResponseCustomerDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerDto"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PageResponseMessageDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MessageDto"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ResponseResultCrmCurrencyConvertDto": {
         "type": "object",
         "properties": {
           "code": {
             "type": "integer",
             "format": "int32"
           },
-          "status": {
+          "message": {
             "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrmCurrencyConvertDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
-      "LoginParams": {
+      "ResponseResultCrmCurrencyRateDto": {
         "type": "object",
         "properties": {
-          "username": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
             "type": "string"
           },
-          "password": {
-            "type": "string"
+          "data": {
+            "$ref": "#/components/schemas/CrmCurrencyRateDto"
           },
-          "autoLogin": {
-            "type": "boolean"
-          },
-          "type": {
-            "type": "string"
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
-      "ErrorResponse": {
-        "required": ["errorCode"],
+      "ResponseResultCrmCurrencySyncStatusDto": {
         "type": "object",
         "properties": {
-          "errorCode": {
-            "type": "string",
-            "description": "业务约定的错误码"
+          "code": {
+            "type": "integer",
+            "format": "int32"
           },
-          "errorMessage": {
-            "type": "string",
-            "description": "业务上的错误信息"
+          "message": {
+            "type": "string"
           },
-          "success": {
-            "type": "boolean",
-            "description": "业务上的请求是否成功"
+          "data": {
+            "$ref": "#/components/schemas/CrmCurrencySyncStatusDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
-      "NoticeIconList": {
+      "ResponseResultCrmDashboardReceivableAgingDto": {
         "type": "object",
         "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrmDashboardReceivableAgingDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultCrmDashboardSummaryDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrmDashboardSummaryDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultCrmEmailCampaignDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrmEmailCampaignDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultCrmEmailPreviewDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrmEmailPreviewDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultCrmEmailTemplateDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrmEmailTemplateDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultCrmInquiryDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrmInquiryDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultCrmOpportunityDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrmOpportunityDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultCrmOpportunityPipelineDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrmOpportunityPipelineDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultCrmOrderDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrmOrderDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultCrmProductDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrmProductDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultCrmQuotationDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrmQuotationDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultCrmReceivableAgingDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrmReceivableAgingDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultCrmReceivableDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrmReceivableDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultCrmShipmentDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrmShipmentDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultCustomerContactDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CustomerContactDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultCustomerDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CustomerDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultDictionaryOptions": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/DictionaryOptions"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultListCrmCurrencyDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/NoticeIconItem"
+              "$ref": "#/components/schemas/CrmCurrencyDto"
             }
           },
-          "total": {
-            "type": "integer",
-            "description": "列表的内容总数",
-            "format": "int32"
-          },
-          "success": {
-            "type": "boolean"
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
-      "NoticeIconItemType": {
-        "title": "NoticeIconItemType",
-        "description": "已读未读列表的枚举",
-        "type": "string",
-        "properties": {},
-        "enum": ["notification", "message", "event"]
-      },
-      "NoticeIconItem": {
+      "ResponseResultListCrmCurrencyRateCheckDto": {
         "type": "object",
         "properties": {
-          "id": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
             "type": "string"
           },
-          "extra": {
-            "type": "string",
-            "format": "any"
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmCurrencyRateCheckDto"
+            }
           },
-          "key": { "type": "string" },
-          "read": {
-            "type": "boolean"
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultListCrmCurrencyRateDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
           },
-          "avatar": {
+          "message": {
             "type": "string"
           },
-          "title": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmCurrencyRateDto"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultListCrmDashboardCustomerSourceDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
             "type": "string"
           },
-          "status": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmDashboardCustomerSourceDto"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultListCrmDashboardTopProductDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
             "type": "string"
           },
-          "datetime": {
-            "type": "string",
-            "format": "date"
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmDashboardTopProductDto"
+            }
           },
-          "description": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultListCrmDashboardTrendDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
             "type": "string"
           },
-          "type": {
-            "extensions": {
-              "x-is-enum": true
-            },
-            "$ref": "#/components/schemas/NoticeIconItemType"
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmDashboardTrendDto"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultListCrmEmailCampaignDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmEmailCampaignDto"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultListCrmEmailLogDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmEmailLogDto"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultListCrmEmailTemplateDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmEmailTemplateDto"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultListCrmProductPriceDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmProductPriceDto"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultListCustomerContactDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerContactDto"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultMapStringInteger": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultMapStringLong": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultMessageDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/MessageDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultPageResponseCrmInquiryDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PageResponseCrmInquiryDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultPageResponseCrmOpportunityDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PageResponseCrmOpportunityDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultPageResponseCrmOrderDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PageResponseCrmOrderDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultPageResponseCrmProductDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PageResponseCrmProductDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultPageResponseCrmQuotationDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PageResponseCrmQuotationDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultPageResponseCrmReceivableDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PageResponseCrmReceivableDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultPageResponseCrmShipmentDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PageResponseCrmShipmentDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultPageResponseCustomerDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PageResponseCustomerDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultPageResponseMessageDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PageResponseMessageDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultVoid": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "StageBucket": {
+        "type": "object",
+        "properties": {
+          "stage": {
+            "type": "string"
+          },
+          "stageName": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "amountBase": {
+            "type": "number"
+          },
+          "conversionRate": {
+            "type": "number"
+          }
+        }
+      },
+      "TransferRequest": {
+        "type": "object",
+        "properties": {
+          "newOwnerId": {
+            "type": "string"
           }
         }
       }

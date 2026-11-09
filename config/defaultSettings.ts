@@ -8,7 +8,8 @@ const Settings: ProLayoutProps & {
 } = {
   navTheme: 'light',
   colorPrimary: '#1677ff',
-  layout: 'mix',
+  // 顶部菜单布局：整站不显示左侧边栏，一级菜单在顶部，子菜单走下拉
+  layout: 'top',
   contentWidth: 'Fluid',
   fixedHeader: false,
   fixSiderbar: true,

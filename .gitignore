@@ -30,6 +30,7 @@ functions/*
 
 # claude code local settings
 .claude/settings.local.json
+.mcp.json
 
 # umi
 .umi

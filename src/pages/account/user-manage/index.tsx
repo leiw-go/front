@@ -1,4 +1,4 @@
-﻿import { PlusOutlined } from '@ant-design/icons';
+﻿import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import {
   ModalForm,
@@ -12,6 +12,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useIntl } from '@umijs/max';
 import { Button, Drawer, message, Space, Tag } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
+import ActionButton from '@/components/ActionButton';
 import {
   createUser,
   deleteUser,
@@ -163,28 +164,32 @@ const UserManage: React.FC = () => {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
-      render: (_, record) => [
-        <a
-          key="edit"
-          onClick={() => {
-            setCurrentRow(record);
-            setEditModalOpen(true);
-          }}
-        >
-          编辑
-        </a>,
-        <a
-          key="delete"
-          onClick={async () => {
-            if (record.id) {
-              await delUserRun(record.id);
-            }
-          }}
-          style={{ color: 'red' }}
-        >
-          删除
-        </a>,
-      ],
+      width: 80,
+      fixed: 'right',
+      render: (_, record) => (
+        <Space size={4}>
+          <ActionButton
+            key="edit"
+            title="编辑"
+            icon={<EditOutlined />}
+            onClick={() => {
+              setCurrentRow(record);
+              setEditModalOpen(true);
+            }}
+          />
+          <ActionButton
+            key="delete"
+            title="删除"
+            icon={<DeleteOutlined />}
+            danger
+            onClick={async () => {
+              if (record.id) {
+                await delUserRun(record.id);
+              }
+            }}
+          />
+        </Space>
+      ),
     },
   ];
 
@@ -195,6 +200,7 @@ const UserManage: React.FC = () => {
         headerTitle="用户列表"
         actionRef={actionRef}
         rowKey="id"
+        scroll={{ x: 'max-content' }}
         search={false}
         toolBarRender={() => [
           <Button

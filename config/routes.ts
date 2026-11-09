@@ -344,6 +344,85 @@ export default [
     component: './chatbot',
     access: 'canAdmin',
   },
+  // 外贸 CRM 模块（对应后端 /api/crm/**）
+  {
+    path: '/crm',
+    name: 'crm',
+    icon: 'global',
+    access: 'canAdmin',
+    routes: [
+      {
+        path: '/crm',
+        redirect: '/crm/dashboard',
+      },
+      {
+        name: 'dashboard',
+        icon: 'dashboard',
+        path: '/crm/dashboard',
+        component: './crm/dashboard',
+      },
+      {
+        name: 'customer-manage',
+        icon: 'team',
+        path: '/crm/customer-manage',
+        component: './crm/customer-manage',
+      },
+      {
+        name: 'product-manage',
+        icon: 'shopping',
+        path: '/crm/product-manage',
+        component: './crm/product-manage',
+      },
+      {
+        name: 'opportunity-manage',
+        icon: 'funnelPlot',
+        path: '/crm/opportunity-manage',
+        component: './crm/opportunity-manage',
+      },
+      {
+        name: 'inquiry-manage',
+        icon: 'inbox',
+        path: '/crm/inquiry-manage',
+        component: './crm/inquiry-manage',
+      },
+      {
+        name: 'quotation-manage',
+        icon: 'fileText',
+        path: '/crm/quotation-manage',
+        component: './crm/quotation-manage',
+      },
+      {
+        name: 'order-manage',
+        icon: 'reconciliation',
+        path: '/crm/order-manage',
+        component: './crm/order-manage',
+      },
+      {
+        name: 'shipment-manage',
+        icon: 'car',
+        path: '/crm/shipment-manage',
+        component: './crm/shipment-manage',
+      },
+      {
+        name: 'email-manage',
+        icon: 'mail',
+        path: '/crm/email-manage',
+        component: './crm/email-manage',
+      },
+      {
+        name: 'currency-manage',
+        icon: 'dollar',
+        path: '/crm/currency-manage',
+        component: './crm/currency-manage',
+      },
+      {
+        name: 'message-center',
+        icon: 'bell',
+        path: '/crm/message-center',
+        component: './crm/message-center',
+      },
+    ],
+  },
   {
     path: '/',
     redirect: '/chatbot',
