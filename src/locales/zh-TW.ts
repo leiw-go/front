@@ -1,4 +1,3 @@
-import component from './zh-TW/component';
 import globalHeader from './zh-TW/globalHeader';
 import menu from './zh-TW/menu';
 import network from './zh-TW/network';
@@ -18,5 +17,4 @@ export default {
   ...settingDrawer,
   ...settings,
   ...network,
-  ...component,
 };

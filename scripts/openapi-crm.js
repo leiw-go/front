@@ -1,16 +1,15 @@
 /**
  * 生成 CRM 前端 service 层。
  *
- * 数据源：config/oneapi.json（已合并后端 /api/crm/** 的 OpenAPI 定义）。
+ * 数据源：config/crm-openapi.json（后端 /api/crm/** 的 OpenAPI 定义）。
  * 输出：src/services/crm/**（由 @umijs/openapi 生成，勿手改）。
  *
  * 用法：npm run openapi:crm
  *
  * 为什么不直接用 `npm run openapi`（max openapi）：
- * 那条命令会按 config/config.ts 的 openAPI 配置整目录重建 src/services/ant-design-pro，
- * 而该目录下的 api.ts / typings.d.ts 目前是人工合并维护的（内含 users / roles / lottery
- * 等后端接口），重建会把这些函数清掉、打断 13 个既有页面。CRM 单独走本脚本，
- * 只读 oneapi.json 里的 /api/crm/** 部分，输出到独立命名空间 Crm，互不干扰。
+ * 那条命令会整目录重建 src/services/ant-design-pro，而该目录下的 api.ts / typings.d.ts
+ * 是人工维护的（内含 users / roles 等后端接口），重建会把这些函数清掉、打断既有页面。
+ * 因此 CRM 单独走本脚本，只读 config/crm-openapi.json，输出到独立命名空间 Crm，互不干扰。
  */
 const fs = require('fs');
 const os = require('os');
@@ -18,7 +17,7 @@ const path = require('path');
 const { generateService } = require('@umijs/openapi');
 
 const ROOT = path.join(__dirname, '..');
-const SCHEMA_PATH = path.join(ROOT, 'config/oneapi.json');
+const SCHEMA_PATH = path.join(ROOT, 'config/crm-openapi.json');
 const SERVER_PATH = path.join(ROOT, 'src/services');
 const PROJECT_NAME = 'crm';
 const NAMESPACE = 'Crm';

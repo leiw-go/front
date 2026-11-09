@@ -1,4 +1,3 @@
-import component from './fa-IR/component';
 import globalHeader from './fa-IR/globalHeader';
 import menu from './fa-IR/menu';
 import network from './fa-IR/network';
@@ -17,6 +16,5 @@ export default {
   ...settingDrawer,
   ...settings,
   ...network,
-  ...component,
   ...pages,
 };

@@ -1,4 +1,3 @@
-import component from './bn-BD/component';
 import globalHeader from './bn-BD/globalHeader';
 import menu from './bn-BD/menu';
 import network from './bn-BD/network';
@@ -17,6 +16,5 @@ export default {
   ...settingDrawer,
   ...settings,
   ...network,
-  ...component,
   ...pages,
 };

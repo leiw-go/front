@@ -1,4 +1,3 @@
-import component from './id-ID/component';
 import globalHeader from './id-ID/globalHeader';
 import menu from './id-ID/menu';
 import network from './id-ID/network';
@@ -17,6 +16,5 @@ export default {
   ...settingDrawer,
   ...settings,
   ...network,
-  ...component,
   ...pages,
 };

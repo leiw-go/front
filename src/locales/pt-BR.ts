@@ -1,4 +1,3 @@
-import component from './pt-BR/component';
 import globalHeader from './pt-BR/globalHeader';
 import menu from './pt-BR/menu';
 import network from './pt-BR/network';
@@ -17,6 +16,5 @@ export default {
   ...settingDrawer,
   ...settings,
   ...network,
-  ...component,
   ...pages,
 };

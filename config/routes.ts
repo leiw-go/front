@@ -7,7 +7,7 @@
  * @param redirect 配置路由跳转
  * @param wrappers 配置路由组件的包装组件，通过包装组件可以为当前的路由组件组合进更多的功能。 比如，可以用于路由级别的权限校验
  * @param name 配置路由的标题，默认读取国际化文件 menu.ts 中 menu.xxxx 的值，如配置 name 为 login，则读取 menu.ts 中 menu.login 的取值作为标题
- * @param icon 配置路由的图标，取值参考 https://ant.design/components/icon-cn， 注意去除风格后缀和大小写，如想要配置图标为 <StepBackwardOutlined /> 则取值应为 stepBackward 或 StepBackward，如想要配置图标为 <UserOutlined /> 则取值应为 user 或者 User
+ * @param icon 配置路由的图标，取值参考 https://ant.design/components/icon-cn, 注意去除风格后缀和大小写，如想要配置图标为 <StepBackwardOutlined /> 则取值应为 stepBackward 或 StepBackward，如想要配置图标为 <UserOutlined /> 则取值应为 user 或者 User
  * @doc https://umijs.org/docs/guides/routes
  */
 export default [
@@ -25,68 +25,9 @@ export default [
         redirect: '/user/login',
       },
       {
-        name: 'register-result',
-        icon: 'checkCircle',
-        path: '/user/register-result',
-        component: './user/register-result',
-      },
-      {
-        name: 'register',
-        icon: 'userAdd',
-        path: '/user/register',
-        component: './user/register',
-      },
-      {
         name: '404',
         component: './exception/404',
         path: '/user/*',
-      },
-    ],
-  },
-  {
-    path: '/admin',
-    name: 'admin',
-    icon: 'crown',
-    access: 'canAdmin',
-    routes: [
-      {
-        path: '/admin',
-        redirect: '/admin/sub-page',
-      },
-      {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        component: './Admin',
-      },
-    ],
-  },
-  {
-    path: '/dashboard',
-    name: 'dashboard',
-    icon: 'dashboard',
-    access: 'canAdmin',
-    routes: [
-      {
-        path: '/dashboard',
-        redirect: '/dashboard/analysis',
-      },
-      {
-        name: 'analysis',
-        icon: 'barChart',
-        path: '/dashboard/analysis',
-        component: './dashboard/analysis',
-      },
-      {
-        name: 'monitor',
-        icon: 'monitor',
-        path: '/dashboard/monitor',
-        component: './dashboard/monitor',
-      },
-      {
-        name: 'workplace',
-        icon: 'desktop',
-        path: '/dashboard/workplace',
-        component: './dashboard/workplace',
       },
     ],
   },
@@ -106,203 +47,6 @@ export default [
         icon: 'safetyCertificate',
         path: '/system/role-manage',
         component: './system/role-manage',
-      },
-      {
-        name: 'product-manage',
-        icon: 'shopping',
-        path: '/system/product-manage',
-        component: './system/product-manage',
-      },
-    ],
-  },
-  // 大乐透管理模块
-  {
-    name: 'lottery',
-    icon: 'database',
-    path: '/lottery',
-    routes: [
-      {
-        path: '/lottery',
-        redirect: '/lottery/period-manage',
-      },
-      {
-        name: 'period-manage',
-        icon: 'table',
-        path: '/lottery/period-manage',
-        component: './lottery/period-manage',
-      },
-      {
-        name: 'lottery-analysis',
-        icon: 'barChart',
-        path: '/lottery/analysis',
-        component: './lottery-analyze',
-      },
-    ],
-  },
-  {
-    path: '/form',
-    icon: 'form',
-    name: 'form',
-    access: 'canAdmin',
-    routes: [
-      {
-        path: '/form',
-        redirect: '/form/basic-form',
-      },
-      {
-        name: 'basic-form',
-        icon: 'form',
-        path: '/form/basic-form',
-        component: './form/basic-form',
-      },
-      {
-        name: 'step-form',
-        icon: 'orderedList',
-        path: '/form/step-form',
-        component: './form/step-form',
-      },
-      {
-        name: 'advanced-form',
-        icon: 'profile',
-        path: '/form/advanced-form',
-        component: './form/advanced-form',
-      },
-    ],
-  },
-  {
-    path: '/list',
-    icon: 'table',
-    name: 'list',
-    access: 'canAdmin',
-    routes: [
-      {
-        path: '/list/search',
-        name: 'search-list',
-        component: './list/search',
-        routes: [
-          {
-            path: '/list/search',
-            redirect: '/list/search/articles',
-          },
-          {
-            name: 'articles',
-            icon: 'read',
-            path: '/list/search/articles',
-            component: './list/search/articles',
-          },
-          {
-            name: 'projects',
-            icon: 'project',
-            path: '/list/search/projects',
-            component: './list/search/projects',
-          },
-          {
-            name: 'applications',
-            icon: 'appstore',
-            path: '/list/search/applications',
-            component: './list/search/applications',
-          },
-        ],
-      },
-      {
-        path: '/list',
-        redirect: '/list/table-list',
-      },
-      {
-        name: 'table-list',
-        icon: 'table',
-        path: '/list/table-list',
-        component: './table-list',
-      },
-      {
-        name: 'basic-list',
-        icon: 'unorderedList',
-        path: '/list/basic-list',
-        component: './list/basic-list',
-      },
-      {
-        name: 'card-list',
-        icon: 'creditCard',
-        path: '/list/card-list',
-        component: './list/card-list',
-      },
-    ],
-  },
-  {
-    path: '/profile',
-    name: 'profile',
-    icon: 'profile',
-    access: 'canAdmin',
-    routes: [
-      {
-        path: '/profile',
-        redirect: '/profile/basic',
-      },
-      {
-        name: 'basic',
-        icon: 'idcard',
-        path: '/profile/basic',
-        component: './profile/basic',
-      },
-      {
-        name: 'advanced',
-        icon: 'crown',
-        path: '/profile/advanced',
-        component: './profile/advanced',
-      },
-    ],
-  },
-  {
-    name: 'result',
-    icon: 'checkCircle',
-    path: '/result',
-    access: 'canAdmin',
-    routes: [
-      {
-        path: '/result',
-        redirect: '/result/success',
-      },
-      {
-        name: 'success',
-        icon: 'checkCircle',
-        path: '/result/success',
-        component: './result/success',
-      },
-      {
-        name: 'fail',
-        icon: 'closeCircle',
-        path: '/result/fail',
-        component: './result/fail',
-      },
-    ],
-  },
-  {
-    name: 'exception',
-    icon: 'warning',
-    path: '/exception',
-    access: 'canAdmin',
-    routes: [
-      {
-        path: '/exception',
-        redirect: '/exception/403',
-      },
-      {
-        name: '403',
-        icon: 'stop',
-        path: '/exception/403',
-        component: './exception/403',
-      },
-      {
-        name: '404',
-        icon: 'warning',
-        path: '/exception/404',
-        component: './exception/404',
-      },
-      {
-        name: '500',
-        icon: 'bug',
-        path: '/exception/500',
-        component: './exception/500',
       },
     ],
   },
@@ -425,7 +169,7 @@ export default [
   },
   {
     path: '/',
-    redirect: '/chatbot',
+    redirect: '/crm/dashboard',
   },
   {
     component: './exception/404',
