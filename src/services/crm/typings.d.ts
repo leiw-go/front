@@ -203,6 +203,30 @@ declare namespace Crm {
     targetValue?: string;
   };
 
+  type CrmEmailEngineOptionsDto = {
+    languages?: Option[];
+    tones?: Option[];
+    scenes?: Option[];
+    models?: Option[];
+    defaultModel?: string;
+  };
+
+  type CrmEmailEngineRewriteRequest = {
+    content?: string;
+    subject?: string;
+    language?: string;
+    tone?: string;
+    scene?: string;
+    customInstruction?: string;
+    customerName?: string;
+    senderName?: string;
+    senderCompany?: string;
+    senderTitle?: string;
+    model?: string;
+    temperature?: number;
+    maxTokens?: number;
+  };
+
   type CrmEmailLogDto = {
     id?: string;
     campaignId?: string;
@@ -968,6 +992,12 @@ declare namespace Crm {
     content?: string;
   };
 
+  type Option = {
+    code?: string;
+    label?: string;
+    hint?: string;
+  };
+
   type PageResponseCrmCountryRefDto = {
     data?: CrmCountryRefDto[];
     total?: number;
@@ -1104,6 +1134,13 @@ declare namespace Crm {
     code?: number;
     message?: string;
     data?: CrmEmailCampaignDto;
+    errors?: string[];
+  };
+
+  type ResponseResultCrmEmailEngineOptionsDto = {
+    code?: number;
+    message?: string;
+    data?: CrmEmailEngineOptionsDto;
     errors?: string[];
   };
 

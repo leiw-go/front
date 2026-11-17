@@ -21,7 +21,7 @@ UmiJS 4 (max) + Ant Design Pro 6 + antd v6 + React 19 + TypeScript 的外贸 CRM
 config/
   routes.ts            # 全部路由（CRM 12 个模块 + 角色/用户/个人中心/AI 助手）
   proxy.ts             # dev 代理：/api/ → http://127.0.0.1:8888/design
-  crm-openapi.json     # 后端 CRM 接口的 OpenAPI 快照（service 生成器的输入）
+  crm-openapi.json     # 后端 CRM 接口的 OpenAPI 快照（service 生成器的输入，npm run openapi:sync 刷新）
 scripts/
   openapi-crm.js       # CRM 专属 service 生成器（只读 crm-openapi.json，输出 src/services/crm）
 src/
@@ -33,7 +33,9 @@ src/
 
 ## 功能模块
 
-客户管理、产品管理、商机管理、询盘管理、报价单管理、报价计算、订单管理、发货与应收、邮件群发、汇率管理、站内信、CRM 看板。
+客户管理、产品管理、商机管理、询盘管理、报价单管理、报价计算、订单管理、发货与应收、邮件群发、**邮件引擎**、汇率管理、站内信、CRM 看板。
+
+**邮件引擎**（`/email-engine`，顶层菜单，与产品管理同级）：把基础邮件交给 AI，改写成专业、地道、对应目标语言的商务邮件，流式输出（打字机效果），支持 11 种目标语言 / 2 种语气（新客户 / 老客户）/ 8 种业务场景 + 自定义特殊要求；有草稿走微调、无草稿直接生成，输出主题 + 正文，模型留下的占位符（`[型号]`、`[价格]`）在草稿和结果里都标红提醒，结果可一键存为邮件模板直接群发。后端走 OpenAI 兼容中转（`/design/v1/chat/completions`），接口详见后端 `docs/crm-email-engine-design.md`。
 
 菜单分层：顶部导航直接暴露 **产品管理**、**报价计算**、**CRM**（其余模块在 CRM 下拉里）；用户管理 / 角色管理 / 个人设置 / 站内信收敛在右上角头像下拉。
 
@@ -222,6 +224,7 @@ ssh ubuntu@43.143.244.13 'docker rm -f frontend && \
 ```bash
 npm run dev            # 开发（UMI_ENV=dev，mock 关闭），http://localhost:8000
 npm run build          # 生产构建 → dist/
+npm run openapi:sync   # 从后端 /design/api-docs 刷新 config/crm-openapi.json
 npm run openapi:crm    # 后端接口变更后重新生成 src/services/crm
 npm run lint           # biome + tsc
 npm run test           # vitest

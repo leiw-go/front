@@ -42,6 +42,10 @@ const OPERATION_RENAMES = {
   // 国家 / 时区 / 汇率参考
   list: 'listCrmCountries',
   info: 'getCrmCountryInfo',
+  // 邮件引擎（AI 改写）
+  rewrite: 'rewriteCrmEmail',
+  options: 'emailEngineOptions',
+  saveTemplate_1: 'saveEmailEngineTemplate',
   // 报价 / 询盘
   createQuotation_1: 'createQuotationFromInquiry',
   // 看板 / 漏斗

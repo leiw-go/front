@@ -22,6 +22,7 @@ export default {
   'menu.crm.order-manage': '订单管理',
   'menu.crm.shipment-manage': '发货与应收',
   'menu.crm.email-manage': '邮件营销',
+  'menu.email-engine': '邮件引擎',
   'menu.crm.currency-manage': '汇率管理',
   'menu.crm.message-center': '站内信',
 };

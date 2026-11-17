@@ -20,6 +20,7 @@
   'menu.crm.order-manage': 'অর্ডার',
   'menu.crm.shipment-manage': 'শিপমেন্ট ও প্রাপ্যসমূহ',
   'menu.crm.email-manage': 'ইমেইল ক্যাম্পেইন',
+  'menu.email-engine': 'ইমেইল ইঞ্জিন',
   'menu.crm.currency-manage': 'বিনিময় হার',
   'menu.crm.message-center': 'বার্তা',
 };

@@ -20,6 +20,7 @@
   'menu.crm.order-manage': '注文管理',
   'menu.crm.shipment-manage': '出荷と売掛金',
   'menu.crm.email-manage': 'メールマーケティング',
+  'menu.email-engine': 'メールエンジン',
   'menu.crm.currency-manage': '為替レート',
   'menu.crm.message-center': 'メッセージ',
 };

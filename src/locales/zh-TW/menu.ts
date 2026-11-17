@@ -20,6 +20,7 @@
   'menu.crm.order-manage': '訂單管理',
   'menu.crm.shipment-manage': '出貨與應收',
   'menu.crm.email-manage': '郵件行銷',
+  'menu.email-engine': '郵件引擎',
   'menu.crm.currency-manage': '匯率管理',
   'menu.crm.message-center': '站內信',
 };

@@ -22,6 +22,7 @@ export default {
   'menu.crm.order-manage': 'Orders',
   'menu.crm.shipment-manage': 'Shipments & Receivables',
   'menu.crm.email-manage': 'Email Campaigns',
+  'menu.email-engine': 'Email Engine',
   'menu.crm.currency-manage': 'Currencies',
   'menu.crm.message-center': 'Messages',
 };

@@ -20,6 +20,7 @@
   'menu.crm.order-manage': 'Pesanan',
   'menu.crm.shipment-manage': 'Pengiriman & Piutang',
   'menu.crm.email-manage': 'Email Campaign',
+  'menu.email-engine': 'Mesin Email',
   'menu.crm.currency-manage': 'Nilai Tukar',
   'menu.crm.message-center': 'Pesan',
 };

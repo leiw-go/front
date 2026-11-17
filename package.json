@@ -15,6 +15,7 @@
     "biome:lint": "biome lint",
     "biome": "biome check --write",
     "openapi:crm": "node scripts/openapi-crm.js",
+    "openapi:sync": "node scripts/sync-crm-openapi.js",
     "prepare": "npx husky && max setup",
     "preview": "max preview --port 8000",
     "preview:build": "max build && max preview --port 8000",

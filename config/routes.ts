@@ -111,6 +111,14 @@ export default [
     component: './crm/product-manage',
     access: 'canAdmin',
   },
+  // 邮件引擎：独立入口，与产品管理同级
+  {
+    path: '/email-engine',
+    name: 'email-engine',
+    icon: 'robot',
+    component: './crm/email-engine',
+    access: 'canAdmin',
+  },
   // 外贸 CRM 模块（对应后端 /api/crm/**）
   {
     path: '/crm',

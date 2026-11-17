@@ -20,6 +20,7 @@
   'menu.crm.order-manage': 'سفارش‌ها',
   'menu.crm.shipment-manage': 'ارسال و مطالبات',
   'menu.crm.email-manage': 'کمپین ایمیل',
+  'menu.email-engine': 'موتور ایمیل',
   'menu.crm.currency-manage': 'نرخ ارز',
   'menu.crm.message-center': 'پیام‌ها',
 };

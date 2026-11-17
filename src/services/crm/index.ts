@@ -8,6 +8,7 @@ import * as crmCurrency from "./crmCurrency";
 import * as crmCustomer from "./crmCustomer";
 import * as crmDashboard from "./crmDashboard";
 import * as crmEmail from "./crmEmail";
+import * as crmEmailEngine from "./crmEmailEngine";
 import * as crmInquiry from "./crmInquiry";
 import * as crmMessage from "./crmMessage";
 import * as crmOpportunity from "./crmOpportunity";
@@ -29,6 +30,7 @@ export default {
   crmContact,
   crmReceivable,
   crmEmail,
+  crmEmailEngine,
   crmDashboard,
   crmCountry,
 };

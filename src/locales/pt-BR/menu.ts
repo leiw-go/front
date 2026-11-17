@@ -20,6 +20,7 @@
   'menu.crm.order-manage': 'Pedidos',
   'menu.crm.shipment-manage': 'Envios e Contas a Receber',
   'menu.crm.email-manage': 'Campanhas de E-mail',
+  'menu.email-engine': 'Moteur de E-mail',
   'menu.crm.currency-manage': 'Câmbio',
   'menu.crm.message-center': 'Mensagens',
 };
