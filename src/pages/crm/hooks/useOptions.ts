@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { getUsers } from '@/services/ant-design-pro/api';
+import { listCrmCountries } from '@/services/crm/crmCountry';
 import { listCustomers } from '@/services/crm/crmCustomer';
 import { listInquiries } from '@/services/crm/crmInquiry';
 import { listOrders } from '@/services/crm/crmOrder';
@@ -147,6 +149,42 @@ export function useProductOptions() {
       value: product.id ?? '',
       product,
     }));
+
+  return { options, loading: isLoading };
+}
+
+/**
+ * 国家下拉选项（服务端模糊搜索：国家码 / 英文名 / 中文名 / 别名）。
+ *
+ * 关键词输入做 300ms 防抖；不传关键词时后端返回常用外贸国家置顶的列表。
+ */
+export function useCountryOptions(keyword?: string) {
+  const [debounced, setDebounced] = useState(keyword ?? '');
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebounced(keyword ?? ''), 300);
+    return () => clearTimeout(timer);
+  }, [keyword]);
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['crm', 'country-options', debounced],
+    queryFn: async () => {
+      const res = await listCrmCountries({
+        keyword: debounced || undefined,
+        page: 1,
+        size: 50,
+      });
+      return res?.data?.data ?? [];
+    },
+  });
+
+  const options = (data ?? []).map((country) => ({
+    label: `${country.countryNameZh ?? country.countryName ?? ''} ${
+      country.countryName ?? ''
+    } (${country.countryCode ?? ''})`,
+    value: country.countryCode ?? '',
+    country,
+  }));
 
   return { options, loading: isLoading };
 }

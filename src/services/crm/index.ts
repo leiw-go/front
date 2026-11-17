@@ -3,6 +3,7 @@
 // API 更新时间：
 // API 唯一标识：
 import * as crmContact from "./crmContact";
+import * as crmCountry from "./crmCountry";
 import * as crmCurrency from "./crmCurrency";
 import * as crmCustomer from "./crmCustomer";
 import * as crmDashboard from "./crmDashboard";
@@ -29,4 +30,5 @@ export default {
   crmReceivable,
   crmEmail,
   crmDashboard,
+  crmCountry,
 };

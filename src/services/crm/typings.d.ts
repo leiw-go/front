@@ -22,6 +22,42 @@ declare namespace Crm {
     id: string;
   };
 
+  type CrmCountryInfoDto = {
+    countryCode?: string;
+    countryName?: string;
+    countryNameZh?: string;
+    countryAliases?: string;
+    timezone?: string;
+    timezones?: string;
+    currentTime?: string;
+    currentTimeText?: string;
+    utcOffset?: string;
+    hoursFromBeijing?: number;
+    beijingOffsetText?: string;
+    currencyCode?: string;
+    currencyName?: string;
+    currencySymbol?: string;
+    rateDate?: string;
+    rateToUsd?: number;
+    rateToCny?: number;
+    rateFromUsd?: number;
+    rateFromCny?: number;
+    rateMissing?: boolean;
+  };
+
+  type CrmCountryRefDto = {
+    countryCode?: string;
+    countryName?: string;
+    countryNameZh?: string;
+    countryAliases?: string;
+    timezone?: string;
+    timezones?: string;
+    currencyCode?: string;
+    currencyName?: string;
+    currencySymbol?: string;
+    isCommon?: number;
+  };
+
   type CrmCurrencyConvertDto = {
     amount?: number;
     fromCurrency?: string;
@@ -748,6 +784,10 @@ declare namespace Crm {
     contactId: string;
   };
 
+  type getCrmCountryInfoParams = {
+    country: string;
+  };
+
   type getCrmProductParams = {
     id: string;
   };
@@ -774,6 +814,12 @@ declare namespace Crm {
 
   type getQuotationParams = {
     id: string;
+  };
+
+  type listCrmCountriesParams = {
+    keyword?: string;
+    page?: number;
+    size?: number;
   };
 
   type listCrmProductPricesParams = {
@@ -922,6 +968,13 @@ declare namespace Crm {
     content?: string;
   };
 
+  type PageResponseCrmCountryRefDto = {
+    data?: CrmCountryRefDto[];
+    total?: number;
+    page?: number;
+    size?: number;
+  };
+
   type PageResponseCrmInquiryDto = {
     data?: CrmInquiryDto[];
     total?: number;
@@ -1003,6 +1056,13 @@ declare namespace Crm {
 
   type replaceCrmProductPricesParams = {
     id: string;
+  };
+
+  type ResponseResultCrmCountryInfoDto = {
+    code?: number;
+    message?: string;
+    data?: CrmCountryInfoDto;
+    errors?: string[];
   };
 
   type ResponseResultCrmCurrencyConvertDto = {
@@ -1240,6 +1300,13 @@ declare namespace Crm {
     code?: number;
     message?: string;
     data?: MessageDto;
+    errors?: string[];
+  };
+
+  type ResponseResultPageResponseCrmCountryRefDto = {
+    code?: number;
+    message?: string;
+    data?: PageResponseCrmCountryRefDto;
     errors?: string[];
   };
 

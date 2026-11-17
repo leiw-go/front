@@ -114,7 +114,7 @@ export default defineConfig({
    * @name layout 插件
    * @doc https://umijs.org/docs/max/layout-menu
    */
-  title: 'Prompt Design',
+  title: '外贸 CRM 系统',
   layout: {
     locale: true,
     ...defaultSettings,

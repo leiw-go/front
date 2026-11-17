@@ -31,12 +31,13 @@ export default [
       },
     ],
   },
-  // 系统管理模块
+  // 系统管理模块：入口收敛到右上角头像下拉，顶部菜单不再展示
   {
     name: 'system',
     icon: 'setting',
     path: '/system',
     access: 'canAdmin',
+    hideInMenu: true,
     routes: [
       {
         path: '/system',
@@ -47,13 +48,16 @@ export default [
         icon: 'safetyCertificate',
         path: '/system/role-manage',
         component: './system/role-manage',
+        hideInMenu: true,
       },
     ],
   },
+  // 个人页：入口收敛到右上角头像下拉，顶部菜单不再展示
   {
     name: 'account',
     icon: 'user',
     path: '/account',
+    hideInMenu: true,
     routes: [
       {
         path: '/account',
@@ -65,12 +69,14 @@ export default [
         path: '/account/center',
         component: './account/center',
         access: 'canAdmin',
+        hideInMenu: true,
       },
       {
         name: 'settings',
         icon: 'setting',
         path: '/account/settings',
         component: './account/settings',
+        hideInMenu: true,
       },
       {
         name: 'user-manage',
@@ -78,6 +84,7 @@ export default [
         path: '/account/user-manage',
         component: './account/user-manage',
         access: 'canAdmin',
+        hideInMenu: true,
       },
     ],
   },
@@ -86,6 +93,22 @@ export default [
     name: 'chatbot',
     icon: 'robot',
     component: './chatbot',
+    access: 'canAdmin',
+  },
+  // 报价计算：独立入口，提到最外层
+  {
+    path: '/quotation-calculator',
+    name: 'quotation-calculator',
+    icon: 'calculator',
+    component: './crm/quotation-calculator',
+    access: 'canAdmin',
+  },
+  // 产品管理：独立入口，提到最外层
+  {
+    path: '/product-manage',
+    name: 'product-manage',
+    icon: 'shopping',
+    component: './crm/product-manage',
     access: 'canAdmin',
   },
   // 外贸 CRM 模块（对应后端 /api/crm/**）
@@ -110,12 +133,6 @@ export default [
         icon: 'team',
         path: '/crm/customer-manage',
         component: './crm/customer-manage',
-      },
-      {
-        name: 'product-manage',
-        icon: 'shopping',
-        path: '/crm/product-manage',
-        component: './crm/product-manage',
       },
       {
         name: 'opportunity-manage',
@@ -164,6 +181,8 @@ export default [
         icon: 'bell',
         path: '/crm/message-center',
         component: './crm/message-center',
+        // 入口收敛到右上角头像下拉，CRM 菜单里不再重复出现
+        hideInMenu: true,
       },
     ],
   },

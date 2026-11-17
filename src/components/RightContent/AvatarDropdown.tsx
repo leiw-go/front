@@ -1,18 +1,31 @@
 ﻿import {
+  BellOutlined,
   LogoutOutlined,
+  SafetyCertificateOutlined,
   SettingOutlined,
   SkinOutlined,
-  UserOutlined,
+  TeamOutlined,
 } from '@ant-design/icons';
 import { history, useModel } from '@umijs/max';
 import type { MenuProps } from 'antd';
 import { Spin } from 'antd';
-import React, { startTransition } from 'react';
+import React, { startTransition, useState } from 'react';
 import { outLogin } from '@/services/ant-design-pro/api';
 import HeaderDropdown from '../HeaderDropdown';
 
 type GlobalHeaderRightProps = {
   children?: React.ReactNode;
+};
+
+/**
+ * 下拉菜单项对应的路由。
+ * 这些页面原来挂在顶部菜单里，现已统一收敛到右上角头像下拉。
+ */
+const MENU_PATHS: Record<string, string> = {
+  'user-manage': '/account/user-manage',
+  'role-manage': '/system/role-manage',
+  'message-center': '/crm/message-center',
+  settings: '/account/settings',
 };
 
 export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({
@@ -35,9 +48,12 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({
     }
   };
   const { initialState, setInitialState } = useModel('@@initialState');
+  // 用 click 触发：hover 触发时鼠标从菜单项移回用户名的间隙会让下拉直接消失
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const onMenuClick: MenuProps['onClick'] = (event) => {
     const { key } = event;
+    setDropdownOpen(false);
     if (key === 'logout') {
       startTransition(() => {
         setInitialState((s) => ({ ...s, currentUser: undefined }));
@@ -49,7 +65,10 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({
       setInitialState((s) => ({ ...s, settingDrawerOpen: true }));
       return;
     }
-    history.push('/account/' + key);
+    const path = MENU_PATHS[key];
+    if (path) {
+      history.push(path);
+    }
   };
 
   if (!initialState) {
@@ -69,8 +88,18 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({
       ? [
           {
             key: 'user-manage',
-            icon: <UserOutlined />,
+            icon: <TeamOutlined />,
             label: '用户管理',
+          } as const,
+          {
+            key: 'role-manage',
+            icon: <SafetyCertificateOutlined />,
+            label: '角色管理',
+          } as const,
+          {
+            key: 'message-center',
+            icon: <BellOutlined />,
+            label: '站内信',
           } as const,
         ]
       : []),
@@ -97,6 +126,9 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({
   return (
     <HeaderDropdown
       placement="bottomRight"
+      trigger={['click']}
+      open={dropdownOpen}
+      onOpenChange={setDropdownOpen}
       menu={{
         selectedKeys: [],
         onClick: onMenuClick,

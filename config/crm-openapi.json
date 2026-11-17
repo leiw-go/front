@@ -2816,6 +2816,84 @@
           }
         }
       }
+    },
+    "/api/crm/countries": {
+      "get": {
+        "tags": ["CRM Country"],
+        "summary": "List countries",
+        "description": "国家列表，可按国家码 / 英文名 / 中文名搜索",
+        "operationId": "list",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultPageResponseCrmCountryRefDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/countries/info": {
+      "get": {
+        "tags": ["CRM Country"],
+        "summary": "Get country info",
+        "description": "查询国家信息：时区、当前时间、主要货币、对美元与人民币的汇率",
+        "operationId": "info",
+        "parameters": [
+          {
+            "name": "country",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmCountryInfoDto"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -6325,6 +6403,172 @@
         "properties": {
           "newOwnerId": {
             "type": "string"
+          }
+        }
+      },
+      "ResponseResultPageResponseCrmCountryRefDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PageResponseCrmCountryRefDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultCrmCountryInfoDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrmCountryInfoDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "PageResponseCrmCountryRefDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmCountryRefDto"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CrmCountryInfoDto": {
+        "type": "object",
+        "properties": {
+          "countryCode": {
+            "type": "string"
+          },
+          "countryName": {
+            "type": "string"
+          },
+          "countryNameZh": {
+            "type": "string"
+          },
+          "countryAliases": {
+            "type": "string"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "timezones": {
+            "type": "string"
+          },
+          "currentTime": {
+            "type": "string"
+          },
+          "currentTimeText": {
+            "type": "string"
+          },
+          "utcOffset": {
+            "type": "string"
+          },
+          "hoursFromBeijing": {
+            "type": "number"
+          },
+          "beijingOffsetText": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "currencyName": {
+            "type": "string"
+          },
+          "currencySymbol": {
+            "type": "string"
+          },
+          "rateDate": {
+            "type": "string"
+          },
+          "rateToUsd": {
+            "type": "number"
+          },
+          "rateToCny": {
+            "type": "number"
+          },
+          "rateFromUsd": {
+            "type": "number"
+          },
+          "rateFromCny": {
+            "type": "number"
+          },
+          "rateMissing": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CrmCountryRefDto": {
+        "type": "object",
+        "properties": {
+          "countryCode": {
+            "type": "string"
+          },
+          "countryName": {
+            "type": "string"
+          },
+          "countryNameZh": {
+            "type": "string"
+          },
+          "countryAliases": {
+            "type": "string"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "timezones": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "currencyName": {
+            "type": "string"
+          },
+          "currencySymbol": {
+            "type": "string"
+          },
+          "isCommon": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       }

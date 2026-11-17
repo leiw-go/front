@@ -39,6 +39,9 @@ const OPERATION_RENAMES = {
   deleteProduct_1: 'deleteCrmProduct',
   listPrices: 'listCrmProductPrices',
   replacePrices: 'replaceCrmProductPrices',
+  // 国家 / 时区 / 汇率参考
+  list: 'listCrmCountries',
+  info: 'getCrmCountryInfo',
   // 报价 / 询盘
   createQuotation_1: 'createQuotationFromInquiry',
   // 看板 / 漏斗
