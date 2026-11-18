@@ -3557,6 +3557,112 @@
         }
       }
     },
+    "/api/crm/email-engine/history": {
+      "get": {
+        "tags": [
+          "CRM Email Engine"
+        ],
+        "summary": "查询邮件生成历史",
+        "description": "按生成时间倒排分页查询所有生成过的邮件",
+        "operationId": "listHistory",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultPageResponseCrmEmailGenerationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crm/email-engine/history/{id}": {
+      "get": {
+        "tags": [
+          "CRM Email Engine"
+        ],
+        "summary": "查询邮件生成历史详情",
+        "description": "按 ID 查询一条生成记录",
+        "operationId": "getHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultCrmEmailGenerationDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CRM Email Engine"
+        ],
+        "summary": "删除邮件生成历史",
+        "description": "逻辑删除一条生成记录",
+        "operationId": "deleteHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseResultBoolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/crm/dashboard/trend": {
       "get": {
         "tags": [
@@ -7995,6 +8101,162 @@
           }
         }
       },
+      "CrmEmailGenerationDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "记录 ID"
+          },
+          "requestId": {
+            "type": "string",
+            "description": "生成请求 ID"
+          },
+          "subject": {
+            "type": "string",
+            "description": "邮件主题"
+          },
+          "content": {
+            "type": "string",
+            "description": "邮件正文"
+          },
+          "language": {
+            "type": "string",
+            "description": "目标语言码"
+          },
+          "tone": {
+            "type": "string",
+            "description": "语气：new_customer / existing_customer"
+          },
+          "scene": {
+            "type": "string",
+            "description": "业务场景"
+          },
+          "model": {
+            "type": "string",
+            "description": "模型（provider:model）"
+          },
+          "sourceContent": {
+            "type": "string",
+            "description": "输入的草稿"
+          },
+          "customInstruction": {
+            "type": "string",
+            "description": "特殊场景与要求"
+          },
+          "customerName": {
+            "type": "string",
+            "description": "客户称呼"
+          },
+          "senderName": {
+            "type": "string",
+            "description": "我方发件人"
+          },
+          "senderCompany": {
+            "type": "string",
+            "description": "我方公司"
+          },
+          "senderTitle": {
+            "type": "string",
+            "description": "我方职位"
+          },
+          "elapsedMs": {
+            "type": "integer",
+            "description": "生成耗时（毫秒）",
+            "format": "int64"
+          },
+          "promptTokens": {
+            "type": "integer",
+            "description": "输入 token",
+            "format": "int32"
+          },
+          "completionTokens": {
+            "type": "integer",
+            "description": "输出 token",
+            "format": "int32"
+          },
+          "totalTokens": {
+            "type": "integer",
+            "description": "总 token",
+            "format": "int32"
+          },
+          "ownerId": {
+            "type": "string",
+            "description": "生成人"
+          },
+          "createTime": {
+            "type": "string",
+            "description": "生成时间",
+            "format": "date-time"
+          }
+        },
+        "description": "邮件生成历史"
+      },
+      "PageResponseCrmEmailGenerationDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmEmailGenerationDto"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ResponseResultPageResponseCrmEmailGenerationDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PageResponseCrmEmailGenerationDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultCrmEmailGenerationDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrmEmailGenerationDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "CrmDashboardTrendDto": {
         "type": "object",
         "properties": {
@@ -8793,6 +9055,27 @@
           },
           "data": {
             "$ref": "#/components/schemas/CurrentUserResponse"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseResultBoolean": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "boolean"
           },
           "errors": {
             "type": "array",

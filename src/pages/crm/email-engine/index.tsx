@@ -7,7 +7,7 @@ import {
   ThunderboltOutlined,
 } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { history } from '@umijs/max';
 import {
   Alert,
@@ -35,6 +35,7 @@ import {
   saveEmailEngineTemplate,
 } from '@/services/crm/crmEmailEngine';
 import { HighlightedText, HighlightedTextArea } from './highlight';
+import EmailGenerationHistory from './history';
 import {
   type EmailEngineDone,
   type EmailEngineMeta,
@@ -67,6 +68,7 @@ const TONE_LABELS: Record<string, string> = {
 const QuotationEmailEngine: React.FC = () => {
   const [form] = Form.useForm<FormValues>();
   const [messageApi, contextHolder] = message.useMessage();
+  const queryClient = useQueryClient();
   const abortRef = useRef<AbortController | null>(null);
 
   const [streaming, setStreaming] = useState(false);
@@ -167,6 +169,16 @@ const QuotationEmailEngine: React.FC = () => {
     form.setFieldValue('subject', '');
   }, [form]);
 
+  /** 把一条历史邮件填回草稿 —— 拿上一版接着改 */
+  const useHistoryAsDraft = useCallback(
+    (item: Crm.CrmEmailGenerationDto) => {
+      form.setFieldValue('content', item.content ?? '');
+      form.setFieldValue('subject', item.subject ?? '');
+      messageApi.success('已填入草稿，可继续微调');
+    },
+    [form, messageApi],
+  );
+
   /** 开始改写（流式）：有草稿 = 微调，没有草稿 = 直接生成 */
   const startRewrite = useCallback(async () => {
     let values: FormValues;
@@ -212,7 +224,13 @@ const QuotationEmailEngine: React.FC = () => {
         onMeta: (payload) => setMeta(payload),
         onReasoning: (text) => setThinking((prev) => prev + text),
         onDelta: (text) => setResult((prev) => prev + text),
-        onDone: (payload) => setDone(payload),
+        onDone: (payload) => {
+          setDone(payload);
+          // 后端已把这封邮件存进生成历史 —— 刷新列表
+          queryClient.invalidateQueries({
+            queryKey: ['crm', 'email-engine', 'history'],
+          });
+        },
         onError: (err) => setError(err.message),
       },
       controller.signal,
@@ -220,7 +238,7 @@ const QuotationEmailEngine: React.FC = () => {
 
     setStreaming(false);
     abortRef.current = null;
-  }, [form, messageApi]);
+  }, [form, messageApi, queryClient]);
 
   /** 停止（中断流） */
   const stopRewrite = () => {
@@ -678,6 +696,10 @@ const QuotationEmailEngine: React.FC = () => {
                 />
               ) : null}
             </Card>
+
+            <div style={{ marginTop: 16 }}>
+              <EmailGenerationHistory onUseAsDraft={useHistoryAsDraft} />
+            </div>
 
             <Card
               variant="borderless"

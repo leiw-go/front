@@ -46,6 +46,10 @@ const OPERATION_RENAMES = {
   rewrite: 'rewriteCrmEmail',
   options: 'emailEngineOptions',
   saveTemplate_1: 'saveEmailEngineTemplate',
+  // 邮件生成历史
+  listHistory: 'listEmailGenerationHistory',
+  getHistory: 'getEmailGenerationHistory',
+  deleteHistory: 'deleteEmailGenerationHistory',
   // 报价 / 询盘
   createQuotation_1: 'createQuotationFromInquiry',
   // 看板 / 漏斗

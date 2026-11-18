@@ -227,6 +227,49 @@ declare namespace Crm {
     maxTokens?: number;
   };
 
+  type CrmEmailGenerationDto = {
+    /** 记录 ID */
+    id?: string;
+    /** 生成请求 ID */
+    requestId?: string;
+    /** 邮件主题 */
+    subject?: string;
+    /** 邮件正文 */
+    content?: string;
+    /** 目标语言码 */
+    language?: string;
+    /** 语气：new_customer / existing_customer */
+    tone?: string;
+    /** 业务场景 */
+    scene?: string;
+    /** 模型（provider:model） */
+    model?: string;
+    /** 输入的草稿 */
+    sourceContent?: string;
+    /** 特殊场景与要求 */
+    customInstruction?: string;
+    /** 客户称呼 */
+    customerName?: string;
+    /** 我方发件人 */
+    senderName?: string;
+    /** 我方公司 */
+    senderCompany?: string;
+    /** 我方职位 */
+    senderTitle?: string;
+    /** 生成耗时（毫秒） */
+    elapsedMs?: number;
+    /** 输入 token */
+    promptTokens?: number;
+    /** 输出 token */
+    completionTokens?: number;
+    /** 总 token */
+    totalTokens?: number;
+    /** 生成人 */
+    ownerId?: string;
+    /** 生成时间 */
+    createTime?: string;
+  };
+
   type CrmEmailLogDto = {
     id?: string;
     campaignId?: string;
@@ -773,6 +816,10 @@ declare namespace Crm {
     id: string;
   };
 
+  type deleteEmailGenerationHistoryParams = {
+    id: string;
+  };
+
   type deleteEmailTemplateParams = {
     id: string;
   };
@@ -817,6 +864,10 @@ declare namespace Crm {
   };
 
   type getCustomerParams = {
+    id: string;
+  };
+
+  type getEmailGenerationHistoryParams = {
     id: string;
   };
 
@@ -885,6 +936,11 @@ declare namespace Crm {
 
   type listEmailCampaignsParams = {
     status?: string;
+  };
+
+  type listEmailGenerationHistoryParams = {
+    page?: number;
+    size?: number;
   };
 
   type listInquiriesParams = {
@@ -1005,6 +1061,13 @@ declare namespace Crm {
     size?: number;
   };
 
+  type PageResponseCrmEmailGenerationDto = {
+    data?: CrmEmailGenerationDto[];
+    total?: number;
+    page?: number;
+    size?: number;
+  };
+
   type PageResponseCrmInquiryDto = {
     data?: CrmInquiryDto[];
     total?: number;
@@ -1088,6 +1151,13 @@ declare namespace Crm {
     id: string;
   };
 
+  type ResponseResultBoolean = {
+    code?: number;
+    message?: string;
+    data?: boolean;
+    errors?: string[];
+  };
+
   type ResponseResultCrmCountryInfoDto = {
     code?: number;
     message?: string;
@@ -1141,6 +1211,13 @@ declare namespace Crm {
     code?: number;
     message?: string;
     data?: CrmEmailEngineOptionsDto;
+    errors?: string[];
+  };
+
+  type ResponseResultCrmEmailGenerationDto = {
+    code?: number;
+    message?: string;
+    data?: CrmEmailGenerationDto;
     errors?: string[];
   };
 
@@ -1344,6 +1421,13 @@ declare namespace Crm {
     code?: number;
     message?: string;
     data?: PageResponseCrmCountryRefDto;
+    errors?: string[];
+  };
+
+  type ResponseResultPageResponseCrmEmailGenerationDto = {
+    code?: number;
+    message?: string;
+    data?: PageResponseCrmEmailGenerationDto;
     errors?: string[];
   };
 
